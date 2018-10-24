@@ -35,6 +35,7 @@ class AddTeamMemberFragment : Fragment() {
 
     var contxt: Context? = null
     private var memberlistArrayList: ArrayList<Memberlist>? = null
+    private var selectedPlayerList:ArrayList<Memberlist> = ArrayList()
     private var searchMember: SearchMember? = null
     private var gor: String? = null
 
