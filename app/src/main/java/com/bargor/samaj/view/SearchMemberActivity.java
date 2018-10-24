@@ -78,7 +78,7 @@ public class SearchMemberActivity extends AppCompatActivity {
         appBar = (AppBarLayout) findViewById(R.id.appBar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         btnSearch = (Button) findViewById(R.id.btnSearch);
-        rvList = (RecyclerView) findViewById(R.id.rvList);
+        rvList = (RecyclerView) findViewById(R.id.selectGame_rvList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(SearchMemberActivity.this, DividerItemDecoration.VERTICAL);
         rvList.setLayoutManager(new LinearLayoutManager(SearchMemberActivity.this));
         rvList.addItemDecoration(dividerItemDecoration);

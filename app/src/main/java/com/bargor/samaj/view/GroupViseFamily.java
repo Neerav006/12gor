@@ -67,7 +67,7 @@ public class GroupViseFamily extends AppCompatActivity {
         searchMember = getSearchedMember(Constants.BASE_URL);
         memberlistArrayList = new ArrayList<>();
         progressBar = findViewById(R.id.progressBar);
-        rvList = findViewById(R.id.rvList);
+        rvList = findViewById(R.id.selectGame_rvList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(GroupViseFamily.this, DividerItemDecoration.VERTICAL);
         rvList.setLayoutManager(new LinearLayoutManager(GroupViseFamily.this));
         rvList.addItemDecoration(dividerItemDecoration);

@@ -91,7 +91,7 @@ public class BusinessDirectoryListActivity extends AppCompatActivity {
         spType = (Spinner) findViewById(R.id.spType);
         spSubType = findViewById(R.id.spSubType);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        rvList = (RecyclerView) findViewById(R.id.rvList);
+        rvList = (RecyclerView) findViewById(R.id.selectGame_rvList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(BusinessDirectoryListActivity.this, DividerItemDecoration.VERTICAL);
         rvList.addItemDecoration(dividerItemDecoration);
         rvList.setLayoutManager(new LinearLayoutManager(BusinessDirectoryListActivity.this));

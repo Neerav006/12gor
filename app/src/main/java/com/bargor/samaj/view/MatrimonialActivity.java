@@ -101,7 +101,7 @@ public class MatrimonialActivity extends AppCompatActivity implements OnFilter {
         spFrom = (Spinner) findViewById(R.id.spFrom);
         spTo = (Spinner) findViewById(R.id.spTo);
         btnSearch = (Button) findViewById(R.id.btnSearch);
-        rvList = (RecyclerView) findViewById(R.id.rvList);
+        rvList = (RecyclerView) findViewById(R.id.selectGame_rvList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(MatrimonialActivity.this, DividerItemDecoration.VERTICAL);
         rvList.addItemDecoration(dividerItemDecoration);
         rvList.setLayoutManager(new LinearLayoutManager(MatrimonialActivity.this));

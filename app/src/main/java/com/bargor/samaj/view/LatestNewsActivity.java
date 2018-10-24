@@ -47,7 +47,7 @@ public class LatestNewsActivity extends AppCompatActivity {
 
         getLatestNews = getCurrentNews(Constants.BASE_URL);
 
-        rvList = (RecyclerView) findViewById(R.id.rvList);
+        rvList = (RecyclerView) findViewById(R.id.selectGame_rvList);
         rvList.setLayoutManager(new LinearLayoutManager(LatestNewsActivity.this));
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 

@@ -49,7 +49,7 @@ public class DeathMemberListActivity extends AppCompatActivity {
 
         appBar = (AppBarLayout) findViewById(R.id.appBar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        rvList = (RecyclerView) findViewById(R.id.rvList);
+        rvList = (RecyclerView) findViewById(R.id.selectGame_rvList);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         getDeathMemberList = getListOfDeathMember(Constants.BASE_URL);
