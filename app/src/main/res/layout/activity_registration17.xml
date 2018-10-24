@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bargor.samaj.view.RegistrationActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="Registration" />
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+
+            <ProgressBar
+                android:layout_gravity="center"
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <Spinner
+                android:entries="@array/gor_list"
+                android:id="@+id/spGor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:inputType="text|textPersonName"
+                    android:nextFocusForward="@id/edtMobile"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <TextView
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:drawableStart="@android:drawable/ic_menu_my_calendar"
+                android:id="@+id/tvBirthDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Birthday" />
+
+            <TextView
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="5dp"
+                android:id="@+id/tvLableBloodGrp"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:text="બ્લડ ગ્રુપ સિલેક્ટ કરો"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textStyle="italic" />
+
+            <Spinner
+                android:entries="@array/blood_grp"
+                android:id="@+id/spBloodGrp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInMobile"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile"
+                    android:inputType="number|phone"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/edtAddr"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/tvLableVillage"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:text="વતન સિલેક્ટ કરો "
+                android:textColor="@android:color/darker_gray"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:layout_weight="1"
+                    android:id="@+id/spVillageName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/edtOtherVillage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Other Village"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:textColor="@android:color/darker_gray"
+                android:id="@+id/tvLableGautra"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="ગોત્ર સિલેક્ટ કરો "
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:layout_weight="1"
+                    android:entries="@array/shakha"
+                    android:id="@+id/spGautra"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+
+                <EditText
+                    android:id="@+id/edtOtherShakha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Other"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/txtInAddr"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtAddr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Present Address"
+                    android:inputType="text|textPostalAddress"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spDistrict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:layout_marginTop="5dp"
+                android:id="@+id/spCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txtInEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email (Optional)"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="Register"
+                android:textColor="@android:color/white" />
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

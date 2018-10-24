@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single" >
+        <item android:id="@+id/nav_selector_gor" android:visible="false" app:actionLayout="@layout/row_gor_selector"/>
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_people_yellow_800_36dp"
+            android:title="DashBoard" />
+
+        <item android:id="@+id/nav_about_us" android:icon="@drawable/ic_menu_gallery" android:title="About CodeFuelTechnology"/>
+        <item android:visible="false" android:id="@+id/nav_edit" android:icon="@drawable/ic_border_color_red_500_24dp" android:title="Edit detail"/>
+
+        <item android:visible="false" android:id="@+id/nav_edit_profile" android:icon="@drawable/ic_menu_camera" android:title="Edit Picture"/>
+
+        <item android:visible="true" android:id="@+id/nav_donate" android:icon="@drawable/ic_payment_black_24dp" android:title="Donate"/>
+
+
+    </group>
+
+
+
+</menu>

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llFirst"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvLableAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="Add Family Membar"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/tvLableRelation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingStart="10dp"
+        android:text="Select Relation"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <Spinner
+        android:id="@+id/spRelation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/sprelation" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtPart1Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="નામ "
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+        android:visibility="gone"
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        android:layout_margin="5dp"
+        tools:text="Hmt"
+        android:textStyle="italic"
+        android:id="@+id/tvVatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtPart1Addr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="હાલનું રહેઠાણ  "
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtpart1Mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="મોબાઈલ "
+            android:inputType="number"
+            android:maxLength="10"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtpart1Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ઈમેઈલ "
+            android:inputType="textEmailAddress"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/tvLableSelectShakh"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:text="શાખ  સિલેક્ટ કરો "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:entries="@array/shakha"
+        android:id="@+id/spCategoryShakh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <TextView
+        android:id="@+id/tvLableBlood"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:text="બ્લડ ગ્રુપ  સિલેક્ટ કરો "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:entries="@array/blood_grp"
+        android:id="@+id/spCategoryBlood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvpart1DOB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnPart1SelectBirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="જન્મ દિવસ "
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvLableSelectStudy"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:text="અભ્યાસ ની કેટેગરી  સિલેક્ટ કરો "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:id="@+id/spCategoryStudy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/txtStudy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edtStudy"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="અભ્યાસ અથવા કોર્ષ નું નામ"
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvLableSelectBusiness"
+            android:layout_marginTop="10dp"
+            android:textStyle="italic"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            android:text="વ્યવસાયની અથવા જોબ કેટેગરી સિલેક્ટ કરો "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvLableSelectBusinessSubCat"
+            android:layout_marginTop="10dp"
+            android:textStyle="italic"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            android:text="વ્યવસાય અથવા જોબ ની ડિટેઇલ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spSubCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/edtOther"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="વ્યવસાય અથવા જોબ નું નામ"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:inputType="text"
+            android:visibility="gone" />
+        <EditText
+            android:id="@+id/edtBusinessAddr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="વ્યવસાય અથવા જોબ નું સરનામું "
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:inputType="text" />
+
+
+
+
+    </LinearLayout>
+
+
+    <RadioGroup
+        android:id="@+id/rgIsMarried"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbParinit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="પરિણીત " />
+
+        <RadioButton
+            android:id="@+id/rbUnmaried"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="કુંવારા " />
+
+        <RadioButton
+            android:id="@+id/rbVidhva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="વિધવા/વિધુર" />
+
+
+    </RadioGroup>
+
+
+    <Button
+
+        android:id="@+id/btnNext11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Save"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/white" />
+
+
+</LinearLayout>

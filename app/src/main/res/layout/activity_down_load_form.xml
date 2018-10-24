@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bargor.samaj.view.DownLoadFormActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="Download Form" />
+
+
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <TextView
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:text="Premium Form"
+                android:id="@+id/tvInsuranceForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:text="@string/arji_patrak"
+                android:id="@+id/tvArjiPatrak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSarnamaFerfar"
+                android:text="@string/sarnama_ferfar"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvVarsdarFerFar"
+                android:text="@string/varas_ferfar"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvMrutyuSahay"
+                android:text="@string/mrutyu_sahay"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvAbhinandan"
+                android:text="@string/Abhinandan"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSamajikSurksha"
+                android:text="@string/samajik_surksha"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvProfessionDirectory"
+                android:text="@string/professional_dir"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvYuvakYuvati"
+                android:text="@string/yuvak_yuvti"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>
