@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,7 +85,7 @@ class AddTeamMemberFragment : Fragment() {
 
                                     if (memberlistArrayList!!.size > 0) {
 
-                                        showPayDialog(memberlistArrayList!![0].mId,
+                                        showSizeDialog(memberlistArrayList!![0].mId,
                                                 memberlistArrayList!![0].name)
 
                                     } else {
@@ -135,7 +136,7 @@ class AddTeamMemberFragment : Fragment() {
     //-----------------------DIALOG-------------------------------
 
 
-    fun showPayDialog(no: String, name: String) {
+    fun showSizeDialog(no: String, name: String) {
 
         val mDialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_team_member, null)
 
@@ -161,6 +162,68 @@ class AddTeamMemberFragment : Fragment() {
         }
 
 
+    }
+
+    // ------------------------ adapter ------------------------------------
+
+    /**
+     * Provide views to RecyclerView with data from dataSet.
+     *
+     * Initialize the dataset of the Adapter.
+     *
+     * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
+     */
+    class CustomAdapter(private val dataSet: ArrayList<Memberlist>) :
+            RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+
+        /**
+         * Provide a reference to the type of views that you are using (custom ViewHolder)
+         */
+        class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+            val tvMemNo: TextView
+            val tvMemberName:TextView
+            val tvSize:TextView
+            val ivRemove:TextView
+
+            init {
+                // Define click listener for the ViewHolder's View.
+                v.setOnClickListener {
+
+                }
+                tvMemNo = v.findViewById(R.id.tvMemNo)
+                tvMemberName = v.findViewById(R.id.tvMemberName)
+                tvSize = v.findViewById(R.id.tvSize)
+                ivRemove = v.findViewById(R.id.ivRemove)
+            }
+        }
+
+        // Create new views (invoked by the layout manager)
+        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+            // Create a new view.
+            val v = LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.row_add_member_list, viewGroup, false)
+
+            return ViewHolder(v)
+        }
+
+        // Replace the contents of a view (invoked by the layout manager)
+        override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+
+            viewHolder.tvMemNo.text = dataSet[position].mId
+            viewHolder.tvSize.text = dataSet[position].size
+            viewHolder.tvMemberName.text = dataSet[position].name
+
+            // Get element from your dataset at this position and replace the contents of the view
+            // with that element
+
+        }
+
+        // Return the size of your dataset (invoked by the layout manager)
+        override fun getItemCount() = dataSet.size
+
+        companion object {
+            private val TAG = "CustomAdapter"
+        }
     }
 
 

@@ -123,6 +123,42 @@ public class Memberlist implements Parcelable {
     @Expose
     private String shakh;
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    @SerializedName("size")
+    @Expose
+    private String size;
+
+    public boolean isCaptain() {
+        return isCaptain;
+    }
+
+    public void setCaptain(boolean captain) {
+        isCaptain = captain;
+    }
+
+    @SerializedName("caption")
+    @Expose
+    private boolean isCaptain;
+
+    public String getPlayerRole() {
+        return playerRole;
+    }
+
+    public void setPlayerRole(String playerRole) {
+        this.playerRole = playerRole;
+    }
+
+    @SerializedName("player_role")
+    @Expose
+    private String playerRole;
+
     public String getId() {
         return id;
     }
@@ -291,6 +327,9 @@ public class Memberlist implements Parcelable {
         dest.writeString(this.busSubCat);
         dest.writeString(this.blood);
         dest.writeString(this.shakh);
+        dest.writeString(this.size);
+        dest.writeByte(this.isCaptain ? (byte) 1 : (byte) 0);
+        dest.writeString(this.playerRole);
     }
 
     protected Memberlist(Parcel in) {
@@ -316,6 +355,9 @@ public class Memberlist implements Parcelable {
         this.busSubCat = in.readString();
         this.blood = in.readString();
         this.shakh = in.readString();
+        this.size = in.readString();
+        this.isCaptain = in.readByte() != 0;
+        this.playerRole = in.readString();
     }
 
     public static final Creator<Memberlist> CREATOR = new Creator<Memberlist>() {
