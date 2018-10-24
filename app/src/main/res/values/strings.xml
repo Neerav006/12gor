@@ -238,11 +238,13 @@
 
 
     <string-array name="size_arr">
-        <item>Small (s)</item>
+        <item>Small (S)</item>
         <item>Medium (M)</item>
         <item>Large (L)</item>
         <item>Extra large (XL)</item>
 
     </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
