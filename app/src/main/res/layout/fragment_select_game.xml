@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:background="@color/main_bg_light_primary"
+        android:background="@color/dark_white"
         android:elevation="5dp"
         android:gravity="center"
         android:padding="15dp"
         android:text="Select any of the games"
         android:textColor="@color/raisinBlackDark"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/selectGame_rvList"
