@@ -17,6 +17,8 @@ public class ResGameList {
     @Expose
     private String team_size;
 
+    private boolean isChecked;
+
 
     public String getId() {
         return id;
@@ -41,4 +43,13 @@ public class ResGameList {
     public void setTeam_size(String team_size) {
         this.team_size = team_size;
     }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }
+
