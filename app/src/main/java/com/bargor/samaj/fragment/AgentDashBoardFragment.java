@@ -37,6 +37,7 @@ import com.bargor.samaj.view.HomeActivity;
 import com.bargor.samaj.view.LatestNewsActivity;
 import com.bargor.samaj.view.MemberRegistrationActivity;
 import com.bargor.samaj.view.OnRefreshData;
+import com.bargor.samaj.view.RamatActivity;
 import com.bargor.samaj.view.SearchMemberActivity;
 import com.bargor.samaj.view.SendMsgActivity;
 
@@ -473,14 +474,12 @@ public class AgentDashBoardFragment extends Fragment implements OnRefreshData {
             }
         });
 
-        //TODO start ramat utsav activity
+
         cvRamtosav.setOnClickListener(v -> {
 
-
-
+            startActivity(new Intent(getActivity(), RamatActivity.class));
 
         });
-
 
 
         tvVillageInfo.setOnClickListener(new View.OnClickListener() {

@@ -51,7 +51,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         getNotification = getNotificationAPI(Constants.BASE_URL);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        rvList = (RecyclerView) findViewById(R.id.rvList);
+        rvList = (RecyclerView) findViewById(R.id.selectGame_rvList);
         rvList.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
         tvNoNotification = (TextView) findViewById(R.id.tvNoNotification);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);

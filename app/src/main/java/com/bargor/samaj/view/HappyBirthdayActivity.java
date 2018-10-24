@@ -48,7 +48,7 @@ public class HappyBirthdayActivity extends AppCompatActivity {
 
         appBar = (AppBarLayout) findViewById(R.id.appBar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        rvList = (RecyclerView) findViewById(R.id.rvList);
+        rvList = (RecyclerView) findViewById(R.id.selectGame_rvList);
         progressBar= (ProgressBar) findViewById(R.id.progressBar);
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(HappyBirthdayActivity.this,DividerItemDecoration.VERTICAL);
         rvList.setLayoutManager(new LinearLayoutManager(HappyBirthdayActivity.this));

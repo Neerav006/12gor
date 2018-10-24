@@ -18,11 +18,11 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/rvList"
-        app:layout_constraintTop_toTopOf="@+id/rvList" />
+        app:layout_constraintStart_toStartOf="@+id/selectGame_rvList"
+        app:layout_constraintTop_toTopOf="@+id/selectGame_rvList" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvList"
+        android:id="@+id/selectGame_rvList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

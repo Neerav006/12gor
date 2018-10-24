@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SelectGameFragment">
+
+    <TextView
+        android:id="@+id/selectGame_tv_lable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@color/main_bg_light_primary"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Select any of the games"
+        android:textColor="@color/raisinBlackDark"
+        android:textSize="15sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/selectGame_rvList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/selectGame_btn_next"
+        android:layout_below="@+id/selectGame_tv_lable" />
+
+    <ProgressBar
+        android:id="@+id/selectGame_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/selectGame_tv_noGames"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:text="No games added"
+        android:textColor="@color/raisinBlack"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/selectGame_btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
+        android:text="Next"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
