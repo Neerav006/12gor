@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
 android {
     signingConfigs {
         config {
@@ -60,6 +65,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'me.relex:circleindicator:1.2.2@aar'
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
+}
+repositories {
+    mavenCentral()
 }

@@ -61,7 +61,7 @@ public class AgentDashBoardFragment extends Fragment implements OnRefreshData {
     private CardView cvSendMsg;
     private CardView cvBirthDay;
     private CardView cvNews;
-    private CardView cvKhetiMahiti;
+    private CardView cvRamtosav;
     private CardView cvSarkariYojana;
     private CardView cvNokariMahiti;
     private Context context;
@@ -190,7 +190,7 @@ public class AgentDashBoardFragment extends Fragment implements OnRefreshData {
         cvFamilymember = view.findViewById(R.id.cvFamilyList);
         cvRequest = view.findViewById(R.id.cvApplyForPremium);
         cvAddBusiness = view.findViewById(R.id.cvAddBusinessdetail);
-        cvKhetiMahiti = view.findViewById(R.id.cvKhetiMahiti);
+        cvRamtosav = view.findViewById(R.id.cvRamatosav);
         cvSarkariYojana = view.findViewById(R.id.cvSarkariYojana);
         cvNokariMahiti = view.findViewById(R.id.cvNokariMahiti);
         tvVillageInfo = view.findViewById(R.id.tvVillageInfo);
@@ -255,11 +255,11 @@ public class AgentDashBoardFragment extends Fragment implements OnRefreshData {
                     llSecond.addView(cvNews);
 
 
-                    cvKhetiMahiti.setVisibility(View.VISIBLE);
+                    cvRamtosav.setVisibility(View.VISIBLE);
                     cvSarkariYojana.setVisibility(View.VISIBLE);
                     cvNokariMahiti.setVisibility(View.VISIBLE);
 
-                    llLast.addView(cvKhetiMahiti);
+                    llLast.addView(cvRamtosav);
                     llLast.addView(cvSarkariYojana);
                     llLast.addView(cvNokariMahiti);
                     llLast.addView(cvDownloadForm);
@@ -286,11 +286,11 @@ public class AgentDashBoardFragment extends Fragment implements OnRefreshData {
                     llSecond.addView(cvNews);
 
 
-                    cvKhetiMahiti.setVisibility(View.VISIBLE);
+                    cvRamtosav.setVisibility(View.VISIBLE);
                     cvSarkariYojana.setVisibility(View.VISIBLE);
                     cvNokariMahiti.setVisibility(View.VISIBLE);
 
-                    llLast.addView(cvKhetiMahiti);
+                    llLast.addView(cvRamtosav);
                     llLast.addView(cvSarkariYojana);
                     llLast.addView(cvNokariMahiti);
                     llLast.addView(cvDownloadForm);
@@ -333,11 +333,11 @@ public class AgentDashBoardFragment extends Fragment implements OnRefreshData {
                     llSecond.addView(cvNews);
 
 
-                    cvKhetiMahiti.setVisibility(View.VISIBLE);
+                    cvRamtosav.setVisibility(View.VISIBLE);
                     cvSarkariYojana.setVisibility(View.VISIBLE);
                     cvNokariMahiti.setVisibility(View.VISIBLE);
 
-                    llLast.addView(cvKhetiMahiti);
+                    llLast.addView(cvRamtosav);
                     llLast.addView(cvSarkariYojana);
                     llLast.addView(cvNokariMahiti);
                     llLast.addView(cvDownloadForm);
@@ -472,6 +472,16 @@ public class AgentDashBoardFragment extends Fragment implements OnRefreshData {
 
             }
         });
+
+        //TODO start ramat utsav activity
+        cvRamtosav.setOnClickListener(v -> {
+
+
+
+
+        });
+
+
 
         tvVillageInfo.setOnClickListener(new View.OnClickListener() {
             @Override

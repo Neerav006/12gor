@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/tvMemNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            tools:text="Mem No:- 123" />
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/tvMemberName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:textStyle="bold"
+            tools:text="Dhaval prajapati" />
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:text="Select T Shirt size: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+     <android.support.v7.widget.AppCompatSpinner
+         android:id="@+id/spSize"
+         android:entries="@array/size_arr"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"/>
+
+
+       <Button
+           android:layout_marginTop="24dp"
+           android:layout_marginBottom="24dp"
+           android:layout_gravity="center"
+           android:background="@color/colorPrimary"
+           android:text="Add Player"
+           android:textColor="@android:color/black"
+           android:id="@+id/btnAddMember"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+
+
+</LinearLayout>
