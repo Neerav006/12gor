@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.bargor.samaj.R;
+import com.bargor.samaj.fragment.AddTeamMemberFragment;
 import com.bargor.samaj.fragment.SelectGameFragment;
 
 public class RamatActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class RamatActivity extends AppCompatActivity {
 
         ft = getSupportFragmentManager().beginTransaction();
 
-        ft.add(R.id.content_activity_ramat, new SelectGameFragment());
+        ft.add(R.id.content_activity_ramat, new AddTeamMemberFragment());
         ft.commit();
 
     }
