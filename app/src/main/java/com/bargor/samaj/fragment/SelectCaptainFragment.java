@@ -1,7 +1,9 @@
 package com.bargor.samaj.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bargor.samaj.R;
+import com.bargor.samaj.Utils.Utils;
+import com.bargor.samaj.common.RetrofitClient;
+import com.bargor.samaj.cons.Constants;
+import com.bargor.samaj.model.AllMember;
+import com.bargor.samaj.model.Memberlist;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 
 
 public class SelectCaptainFragment extends Fragment {
@@ -27,7 +43,19 @@ public class SelectCaptainFragment extends Fragment {
     Spinner spinner_size;
     ProgressBar progressBar;
     Button button_next;
+    private ArrayList<Memberlist> memberlistArrayList;
+    private SearchMember searchMember;
+    private String gor;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = Utils.getSharedPreference(Constants.MY_PREF, getActivity());
+        gor = sharedPreferences.getString(Constants.GOR, null);
+
+        searchMember = getSearchedMember(Constants.BASE_URL);
+        memberlistArrayList = new ArrayList<>();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,13 +77,31 @@ public class SelectCaptainFragment extends Fragment {
         imageView_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchMemberData();
+
+                if (!editText_id.getText().toString().trim().isEmpty()) {
+                    searchMemberData();
+                }
+
+
             }
         });
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (memberlistArrayList.size() > 0) {
+                    Fragment fragment = new AddTeamMemberFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("data", memberlistArrayList.get(0));
+                    fragment.setArguments(bundle);
+
+                    getFragmentManager().beginTransaction()
+                            .add(R.id.content_activity_ramat, fragment)
+                            .addToBackStack(null)
+                            .hide(SelectCaptainFragment.this).commit();
+                }
+
 
             }
         });
@@ -67,11 +113,60 @@ public class SelectCaptainFragment extends Fragment {
 
         // API call here
 
+        progressBar.setVisibility(View.VISIBLE);
+
+        searchMember.getMemberDetail("1", editText_id.getText().toString().trim(), gor)
+                .enqueue(new Callback<AllMember>() {
+                    @Override
+                    public void onResponse(Call<AllMember> call, Response<AllMember> response) {
+
+                        progressBar.setVisibility(View.GONE);
+                        if (response.isSuccessful()) {
+                            memberlistArrayList = (ArrayList<Memberlist>) response.body().getMemberlist();
+
+                            if (memberlistArrayList.size() > 0) {
+
+                                tv_id.setText(memberlistArrayList.get(0).getId());
+                                tv_name.setText(memberlistArrayList.get(0).getName());
+                                tv_number.setText(memberlistArrayList.get(0).getMobile());
+                                tv_city.setText(memberlistArrayList.get(0).getCity());
+
+
+                            } else {
+                                tv_id.setText(" ");
+                                tv_name.setText(" ");
+                                tv_number.setText(" ");
+                                tv_city.setText("  ");
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<AllMember> call, Throwable t) {
+
+                        progressBar.setVisibility(View.GONE);
+
+                    }
+                });
+
+
     }
 
     private void testMeth() {
 
     }
 
+    SearchMember getSearchedMember(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(SearchMember.class);
+    }
 
+    interface SearchMember {
+
+        @POST("member/searchdetailsapi/")
+        @FormUrlEncoded()
+        Call<AllMember> getMemberDetail(@Field("type") String type, @Field("search") String search, @Field("gor") String gor);
+
+
+    }
 }
