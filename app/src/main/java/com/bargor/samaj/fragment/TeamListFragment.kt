@@ -29,8 +29,10 @@ class TeamListFragment:Fragment() {
     private lateinit var myTeamListApi: MyTeamListApi
     private var id = ""
     private var teamList:ArrayList<MyTeamList> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         myTeamListApi = RetrofitClient.getClient(Constants.BASE_URL).create(MyTeamListApi::class.java)
 
         val sharedPreferences = Utils.getSharedPreference(Constants.MY_PREF, activity!!)
@@ -52,7 +54,7 @@ class TeamListFragment:Fragment() {
                 object :Callback<List<MyTeamList>>{
                     override fun onFailure(call: Call<List<MyTeamList>>, t: Throwable) {
                           progressBar.visibility = View.GONE
-                        Toast.makeText(activity,"Error occurred",Toast.LENGTH_LONG).show()
+                         Toast.makeText(activity,"Error occurred",Toast.LENGTH_LONG).show()
 
 
                     }
@@ -121,6 +123,20 @@ class TeamListFragment:Fragment() {
                 // Define click listener for the ViewHolder's View.
                 v.setOnClickListener {
 
+                    val fragment = TeamDetailFragment()
+                    val bundle = Bundle()
+                    bundle.putString("id",dataSet[adapterPosition].id)
+                    bundle.putString("game",dataSet[adapterPosition].gameName)
+                    bundle.putString("team",dataSet[adapterPosition].teamName)
+                    fragment.arguments = bundle
+
+                    fragmentManager!!.beginTransaction()
+                            .add(R.id.container_my_team,fragment)
+                            .hide(this@TeamListFragment)
+                            .addToBackStack(null)
+                            .commit()
+
+
                 }
 
                 tvMemNo = v.findViewById(R.id.tvMemNo)
@@ -164,5 +180,9 @@ class TeamListFragment:Fragment() {
 
 
     }
+
+
+
+
 
 }
