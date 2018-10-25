@@ -42,9 +42,8 @@ public class SelectGameFragment extends Fragment {
     TextView textView_noGames;
     Button button_next;
     ProgressBar progressBar;
-
-    private ArrayList<ResGameList> responseArrayList = new ArrayList<>();
     GameListAdapter gameListAdapter;
+    private ArrayList<ResGameList> responseArrayList = new ArrayList<>();
     private ResGameList resGameList;
 
     @Override
@@ -65,29 +64,28 @@ public class SelectGameFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                for(int i=0;i<responseArrayList.size();i++){
+                for (int i = 0; i < responseArrayList.size(); i++) {
 
-                    if(responseArrayList.get(i).isChecked()){
+                    if (responseArrayList.get(i).isChecked()) {
                         resGameList = responseArrayList.get(i);
                         break;
                     }
 
                 }
 
-                if(resGameList!=null){
+                if (resGameList != null) {
 
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
 
                     Fragment fragment = new SelectCaptainFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("data",resGameList);
+                    bundle.putParcelable("data", resGameList);
                     fragment.setArguments(bundle);
+                    ft.hide(SelectGameFragment.this);
+                    ft.add(R.id.content_activity_ramat, fragment).addToBackStack(null);
 
-                    ft.replace(R.id.content_activity_ramat, fragment).addToBackStack(null);
                     ft.commit();
                 }
-
-
 
 
             }
@@ -96,9 +94,6 @@ public class SelectGameFragment extends Fragment {
 
         return view_main;
     }
-
-
-
 
 
     private void getAllGames() {
