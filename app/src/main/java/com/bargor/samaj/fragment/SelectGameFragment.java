@@ -98,6 +98,9 @@ public class SelectGameFragment extends Fragment {
     }
 
 
+
+
+
     private void getAllGames() {
         progressBar.setVisibility(View.VISIBLE);
 

@@ -29,7 +29,16 @@ public class RamatActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+                    getSupportFragmentManager().popBackStack();
+
+                }
+                else{
+                    finish();
+                }
+
             }
         });
 
