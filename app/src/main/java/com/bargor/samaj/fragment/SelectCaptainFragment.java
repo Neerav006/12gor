@@ -1,8 +1,8 @@
 package com.bargor.samaj.fragment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -43,6 +43,7 @@ public class SelectCaptainFragment extends Fragment {
     Spinner spinner_size;
     ProgressBar progressBar;
     Button button_next;
+
     private ArrayList<Memberlist> memberlistArrayList;
     private SearchMember searchMember;
     private String gor;
@@ -56,6 +57,7 @@ public class SelectCaptainFragment extends Fragment {
         searchMember = getSearchedMember(Constants.BASE_URL);
         memberlistArrayList = new ArrayList<>();
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,9 +80,13 @@ public class SelectCaptainFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                searchMemberData();
+
+
                 if (!editText_id.getText().toString().trim().isEmpty()) {
                     searchMemberData();
                 }
+
 
 
             }
@@ -102,7 +108,6 @@ public class SelectCaptainFragment extends Fragment {
                             .hide(SelectCaptainFragment.this).commit();
                 }
 
-
             }
         });
 
@@ -112,6 +117,7 @@ public class SelectCaptainFragment extends Fragment {
     private void searchMemberData() {
 
         // API call here
+
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -157,6 +163,7 @@ public class SelectCaptainFragment extends Fragment {
 
     }
 
+
     SearchMember getSearchedMember(String baseUrl) {
         return RetrofitClient.getClient(baseUrl).create(SearchMember.class);
     }
@@ -169,4 +176,5 @@ public class SelectCaptainFragment extends Fragment {
 
 
     }
+
 }
