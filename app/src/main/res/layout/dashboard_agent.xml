@@ -24,33 +24,33 @@
             android:orientation="vertical">
 
             <HorizontalScrollView
-                android:layout_marginBottom="10dp"
-                android:ellipsize="marquee"
-                android:layout_gravity="center_vertical"
                 android:id="@+id/horizontalView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
-                android:fillViewport="true">
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="marquee"
+                android:fillViewport="true"
+                android:focusableInTouchMode="true">
 
                 <LinearLayout
-                    android:background="#EF6C00"
-                    android:layout_gravity="top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#EF6C00"
                     android:gravity="top"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:textStyle="bold"
-                        android:drawableTop="@drawable/home1"
-                        android:layout_margin="10dp"
                         android:id="@+id/tvVillageInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/village_info" />
+                        android:layout_margin="10dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:drawableTop="@drawable/home1"
+                        android:text="@string/village_info"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvKarobariInfo"
@@ -132,8 +132,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawablePadding="5dp"
                         android:drawableTop="@drawable/addmember"
+                        android:drawablePadding="5dp"
                         android:gravity="center"
                         android:text="@string/member_reg"
                         android:textSize="14sp"
@@ -153,8 +153,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawablePadding="5dp"
                         android:drawableTop="@drawable/info"
+                        android:drawablePadding="5dp"
                         android:gravity="center"
                         android:text="@string/member_info"
                         android:textSize="14sp"
@@ -205,8 +205,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawablePadding="5dp"
                         android:drawableTop="@drawable/downloadfile"
+                        android:drawablePadding="5dp"
                         android:gravity="center"
                         android:text="@string/download_form"
                         android:textSize="14sp"
@@ -226,8 +226,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawablePadding="5dp"
                         android:drawableTop="@drawable/email"
+                        android:drawablePadding="5dp"
                         android:gravity="center"
                         android:text="@string/Send_msg"
                         android:textSize="14sp"
@@ -280,8 +280,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawablePadding="10dp"
                         android:drawableTop="@drawable/directory"
+                        android:drawablePadding="10dp"
                         android:gravity="center"
                         android:text="@string/directory"
                         android:textSize="14sp"
@@ -348,9 +348,9 @@
                         android:layout_gravity="center"
                         android:drawableTop="@drawable/info"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="@string/add_business"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                 </android.support.v7.widget.CardView>
 
@@ -368,7 +368,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawableTop="@drawable/farmer"
+                        android:drawableTop="@drawable/ramat"
                         android:gravity="center"
                         android:text="રમતોત્સવ "
                         android:textSize="14sp"
@@ -393,10 +393,10 @@
                         android:layout_gravity="center"
                         android:drawableTop="@drawable/government"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="સરકારી યોજનાની\n માહિતી
 "
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                 </android.support.v7.widget.CardView>
 
@@ -417,13 +417,11 @@
                         android:layout_gravity="center"
                         android:drawableTop="@drawable/job"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="નોકરી વિષયક\n માહિતી "
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                 </android.support.v7.widget.CardView>
-
-
 
 
             </LinearLayout>
@@ -434,21 +432,21 @@
     </ScrollView>
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="0dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp" />
 
 
     </RelativeLayout>
