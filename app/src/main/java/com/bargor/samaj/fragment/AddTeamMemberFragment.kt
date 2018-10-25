@@ -1,6 +1,7 @@
 package com.bargor.samaj.fragment
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
@@ -9,6 +10,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +19,13 @@ import com.bargor.samaj.R
 import com.bargor.samaj.Utils.Utils
 import com.bargor.samaj.common.RetrofitClient
 import com.bargor.samaj.cons.Constants
-import com.bargor.samaj.model.AllMember
-import com.bargor.samaj.model.Memberlist
-import com.bargor.samaj.model.VillageList
+import com.bargor.samaj.model.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_add_team_member.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -38,6 +40,13 @@ class AddTeamMemberFragment : Fragment() {
     private var gor: String? = null
     private var id: String? = null
     var captainMember: Memberlist? = null
+    var team_id: String? = null
+    var c_id: String? = null
+    var c_name: String? = null
+    var c_size: String? = null
+    var game: ResGameList? = null
+    private lateinit var addTeamPlayersapi: AddTeamPlayersapi
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
@@ -57,6 +66,15 @@ class AddTeamMemberFragment : Fragment() {
         gor = sharedPreferences.getString(Constants.GOR, null)
         id = sharedPreferences.getString(Constants.ID, "")
         captainMember = arguments?.getParcelable("data")
+        team_id = arguments?.getString("id")
+        c_name = arguments?.getString("c_name")
+        c_id = arguments?.getString("c_id")
+        c_size = arguments?.getString("c_size")
+        game = arguments?.getParcelable("game")
+
+        addTeamPlayersapi = RetrofitClient.getClient(Constants.BASE_URL).create(AddTeamPlayersapi::class.java)
+
+
     }
 
     override fun onResume() {
@@ -227,7 +245,7 @@ class AddTeamMemberFragment : Fragment() {
 
             }
 
-            if (!isAdded) {
+            if (!isAdded && selectedPlayerList.size.toInt() < game!!.team_size.toInt()) {
                 member.size = spSize.selectedItem.toString()
                 selectedPlayerList.add(member)
                 rvList.adapter = CustomAdapter(selectedPlayerList)
@@ -237,6 +255,86 @@ class AddTeamMemberFragment : Fragment() {
             }
 
             mAlertDialog.cancel()
+
+
+        }
+
+        btnAddTeam.setOnClickListener {
+
+            if (selectedPlayerList.size.toInt() == game!!.team_size.toInt()) {
+
+                // add player api
+
+                val addTeamPlayer = AddTeamPlayer()
+                addTeamPlayer.cId = c_id
+                addTeamPlayer.cName = c_name
+                addTeamPlayer.cSize = c_size
+                addTeamPlayer.teamId = team_id
+
+                val midList = ArrayList<MId>()
+
+                for (items in selectedPlayerList) {
+
+                    val mid = MId()
+                    mid.id = items.id
+                    mid.name = items.name
+                    mid.size = items.size
+                    midList.add(mid)
+
+                }
+
+                addTeamPlayer.mId = midList
+
+                Log.e("player list", Gson().toJson(addTeamPlayer))
+
+                showProgressDialog()
+
+                addTeamPlayersapi.addPlayer(addTeamPlayer).enqueue(
+                        object : Callback<MyRes> {
+                            override fun onFailure(call: Call<MyRes>, t: Throwable) {
+
+                                if (activity != null && progressDialog.isShowing)
+                                    progressDialog.dismiss()
+
+                                Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                            }
+
+                            override fun onResponse(call: Call<MyRes>, response: Response<MyRes>) {
+                                if (activity != null && progressDialog.isShowing)
+                                    progressDialog.dismiss()
+
+
+                                if (response!!.isSuccessful) {
+
+                                    if (response.body()!!.msg.equals("true", true)) {
+
+                                        Toast.makeText(activity, "Successfully Team added..", Toast.LENGTH_LONG).show()
+                                        activity?.finish()
+
+
+                                    } else {
+                                        Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                                }
+
+                            }
+
+
+                        }
+                )
+
+
+            } else {
+                Toast.makeText(activity, "Total Player must be equal to ${game!!.team_size}", Toast.LENGTH_LONG).show()
+
+            }
 
 
         }
@@ -265,7 +363,7 @@ class AddTeamMemberFragment : Fragment() {
             val tvSize: TextView
             val ivRemove: ImageView
             val tvMobile: TextView
-            val tvRole:TextView
+            val tvRole: TextView
 
             init {
                 // Define click listener for the ViewHolder's View.
@@ -325,6 +423,20 @@ class AddTeamMemberFragment : Fragment() {
         override fun getItemCount() = dataSet.size
 
 
+    }
+
+    interface AddTeamPlayersapi {
+        @POST("khelmahotsav/addTeamMemberApi")
+        fun addPlayer(@Body player: AddTeamPlayer): Call<MyRes>
+
+    }
+
+
+    fun showProgressDialog() {
+        progressDialog = ProgressDialog(activity)
+        progressDialog.setTitle("Loading..")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
     }
 
 

@@ -141,6 +141,11 @@ public class SelectCaptainFragment extends Fragment {
                                     Fragment fragment = new CaptainVerifyFragment();
                                     Bundle bundle = new Bundle();
                                     bundle.putString("id", response.body().getId());
+                                    bundle.putString("c_id",memberlistArrayList.get(0).getId());
+                                    bundle.putString("c_name",memberlistArrayList.get(0).getName());
+                                    bundle.putString("c_size",spinner_size.getSelectedItem().toString());
+                                    bundle.putParcelable("game",resGameList);
+                                    bundle.putParcelable("data",memberlistArrayList.get(0));
                                     fragment.setArguments(bundle);
 
                                     getFragmentManager().beginTransaction()

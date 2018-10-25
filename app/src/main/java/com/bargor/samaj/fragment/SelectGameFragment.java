@@ -166,11 +166,12 @@ public class SelectGameFragment extends Fragment {
         private ArrayList<ResGameList> mData;
 
 
-        public GameListAdapter(Context context, ArrayList<ResGameList> mData) {
+        GameListAdapter(Context context, ArrayList<ResGameList> mData) {
             this.mData = mData;
             this.context = context;
         }
 
+        @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_list_games, parent, false);
