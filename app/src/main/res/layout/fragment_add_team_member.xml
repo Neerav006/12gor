@@ -63,26 +63,23 @@
         app:layout_constraintBottom_toTopOf="@+id/btnAddTeam"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/txtInMemberNo" />
 
 
     <Button
 
         android:id="@+id/btnAddTeam"
-        android:layout_width="88dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:text="Add Team"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectGame_rvList" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <ProgressBar

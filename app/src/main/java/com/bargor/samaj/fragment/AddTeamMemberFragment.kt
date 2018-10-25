@@ -275,11 +275,14 @@ class AddTeamMemberFragment : Fragment() {
 
                 for (items in selectedPlayerList) {
 
-                    val mid = MId()
-                    mid.id = items.id
-                    mid.name = items.name
-                    mid.size = items.size
-                    midList.add(mid)
+                    if (!items.isCaptain) {
+
+                        val mid = MId()
+                        mid.id = items.id
+                        mid.name = items.name
+                        mid.size = items.size
+                        midList.add(mid)
+                    }
 
                 }
 

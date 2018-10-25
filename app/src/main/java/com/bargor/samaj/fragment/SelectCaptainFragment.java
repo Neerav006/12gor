@@ -135,7 +135,7 @@ public class SelectCaptainFragment extends Fragment {
 
                                 if (response.body().getMsg().equalsIgnoreCase("1x")) {
 
-                                    Toast.makeText(getActivity(), "Successfully added", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "Successfully Caption added", Toast.LENGTH_LONG).show();
 
 
                                     Fragment fragment = new CaptainVerifyFragment();

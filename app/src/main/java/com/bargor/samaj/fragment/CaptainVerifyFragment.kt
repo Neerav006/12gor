@@ -66,7 +66,7 @@ class CaptainVerifyFragment : Fragment() {
 
                 showProgressDialog()
 
-                sendOTPVerify.sendOtp(id!!, edtOtp.text.toString().trim()).enqueue(
+                sendOTPVerify.sendOtp(c_id!!,id!!, edtOtp.text.toString().trim()).enqueue(
                         object : Callback<MyRes> {
                             override fun onFailure(call: Call<MyRes>, t: Throwable) {
 
@@ -149,7 +149,9 @@ class CaptainVerifyFragment : Fragment() {
     interface SendOTPVerify {
         @POST("khelmahotsav/verify_team")
         @FormUrlEncoded
-        fun sendOtp(@Field("id") id: String, @Field("code") code: String): Call<MyRes>
+        fun sendOtp(@Field("id") id: String,
+                    @Field("t_id") t_id:String,
+                    @Field("code") code: String): Call<MyRes>
     }
 
 }
