@@ -170,7 +170,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".view.RamatActivity"></activity>
+        <activity android:name=".view.RamatActivity" />
+        <activity
+            android:name=".view.MyTeamActivity"
+            android:label="@string/title_activity_my_team"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

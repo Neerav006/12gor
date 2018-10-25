@@ -1,5 +1,6 @@
 package com.bargor.samaj.view;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,7 +67,8 @@ public class RamatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.action_menu_my_team){
-         // TODO myteam api
+
+            startActivity(new Intent(RamatActivity.this,MyTeamActivity.class));
 
             return true;
         }
