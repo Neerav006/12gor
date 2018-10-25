@@ -193,7 +193,7 @@ public class FamilyMemberList extends AppCompatActivity {
             viewHolder.tvName.setText(mDataSet.get(position).getName());
             viewHolder.tvMemNo.setText(mDataSet.get(position).getRelation());
             viewHolder.tvDOB.setText("Birth Day:-".concat(Utils.getDDMMYYYY(mDataSet.get(position).getDob())));
-
+            viewHolder.tvMemNO.setText("Mem No: ".concat(mDataSet.get(position).getId()));
 
         }
         // END_INCLUDE(recyclerViewOnCreateViewHolder)
@@ -217,6 +217,7 @@ public class FamilyMemberList extends AppCompatActivity {
             private final ImageView ivEditProfile;
             private final TextView tvDOB;
             private final TextView tvStudy;
+            private final TextView tvMemNO;
 
 
             ViewHolder(View v) {
@@ -233,6 +234,7 @@ public class FamilyMemberList extends AppCompatActivity {
                 ivEditProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_alt_green_900_24dp));
                 tvDOB = v.findViewById(R.id.tvDOB);
                 tvStudy = v.findViewById(R.id.tvStudy);
+                tvMemNO = v.findViewById(R.id.tvMemNo);
 
                 ivView.setOnClickListener(new View.OnClickListener() {
                     @Override
