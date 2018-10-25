@@ -23,21 +23,20 @@
             app:layout_constraintEnd_toStartOf="@+id/tvMemberName"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Mem No: 1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvMemberName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="14dp"
             android:layout_marginEnd="16dp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvMemNo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toEndOf="@+id/tvMemNo"
-            tools:text="Dhaval Prajapati" />
+            tools:text="Dhaval Prajapati fadsafas asfsaffasdfasf" />
 
         <TextView
             android:id="@+id/tvSize"
@@ -48,8 +47,8 @@
             app:layout_constraintEnd_toStartOf="@+id/tvRole"
             app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMemNo"
-            tools:text="Size: Small (S)" />
+            app:layout_constraintTop_toBottomOf="@+id/tvMemberName"
+            tools:text="Size: Small (S) dsfafa" />
 
         <ImageView
             android:id="@+id/ivRemove"
@@ -57,10 +56,8 @@
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
             android:padding="2dp"
             android:src="@drawable/ic_remove_circle_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/tvRole"
@@ -70,14 +67,13 @@
             android:id="@+id/tvRole"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:textAlignment="center"
             android:textColor="@android:color/holo_red_dark"
             android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvSize"
             app:layout_constraintEnd_toStartOf="@+id/ivRemove"
             app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toEndOf="@+id/tvSize"
-            app:layout_constraintTop_toBottomOf="@+id/tvMemberName"
             tools:text="Captain" />
 
         <TextView

@@ -165,7 +165,8 @@ class TeamListFragment:Fragment() {
         // Replace the contents of a view (invoked by the layout manager)
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-            viewHolder.tvMemNo.text = "Team Name: ".plus(dataSet[position].teamName)
+            viewHolder.tvMemNo.text = "Team Name: "
+            viewHolder.tvMemberName.text = dataSet[position].teamName
             viewHolder.tvSize.text = dataSet[position].gameName
             viewHolder.tvRole.text = "Caption:".plus(dataSet[position].capName)
 
