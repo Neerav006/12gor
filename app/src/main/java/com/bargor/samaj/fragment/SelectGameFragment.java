@@ -45,6 +45,7 @@ public class SelectGameFragment extends Fragment {
 
     private ArrayList<ResGameList> responseArrayList = new ArrayList<>();
     GameListAdapter gameListAdapter;
+    private ResGameList resGameList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,10 +64,32 @@ public class SelectGameFragment extends Fragment {
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                ft.replace(R.id.content_activity_ramat, new SelectCaptainFragment()).addToBackStack(null);
-                ft.commit();
+                for(int i=0;i<responseArrayList.size();i++){
+
+                    if(responseArrayList.get(i).isChecked()){
+                        resGameList = responseArrayList.get(i);
+                        break;
+                    }
+
+                }
+
+                if(resGameList!=null){
+
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                    Fragment fragment = new SelectCaptainFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("data",resGameList);
+                    fragment.setArguments(bundle);
+
+                    ft.replace(R.id.content_activity_ramat, fragment).addToBackStack(null);
+                    ft.commit();
+                }
+
+
+
+
             }
         });
 

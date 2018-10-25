@@ -1,9 +1,12 @@
 package com.bargor.samaj.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResGameList {
+public class ResGameList implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -51,5 +54,40 @@ public class ResGameList {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.game_name);
+        dest.writeString(this.team_size);
+        dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+    }
+
+    public ResGameList() {
+    }
+
+    protected ResGameList(Parcel in) {
+        this.id = in.readString();
+        this.game_name = in.readString();
+        this.team_size = in.readString();
+        this.isChecked = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<ResGameList> CREATOR = new Parcelable.Creator<ResGameList>() {
+        @Override
+        public ResGameList createFromParcel(Parcel source) {
+            return new ResGameList(source);
+        }
+
+        @Override
+        public ResGameList[] newArray(int size) {
+            return new ResGameList[size];
+        }
+    };
 }
 

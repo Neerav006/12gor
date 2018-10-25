@@ -1,9 +1,11 @@
 package com.bargor.samaj.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bargor.samaj.R;
 import com.bargor.samaj.Utils.Utils;
@@ -22,6 +25,8 @@ import com.bargor.samaj.common.RetrofitClient;
 import com.bargor.samaj.cons.Constants;
 import com.bargor.samaj.model.AllMember;
 import com.bargor.samaj.model.Memberlist;
+import com.bargor.samaj.model.MyRes;
+import com.bargor.samaj.model.ResGameList;
 
 import java.util.ArrayList;
 
@@ -43,10 +48,15 @@ public class SelectCaptainFragment extends Fragment {
     Spinner spinner_size;
     ProgressBar progressBar;
     Button button_next;
+    private TextInputEditText edtTeamName;
 
     private ArrayList<Memberlist> memberlistArrayList;
     private SearchMember searchMember;
     private String gor;
+    private ResGameList resGameList;
+    private AddCaptain addCaptain;
+    private ProgressDialog progressDialog;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +66,12 @@ public class SelectCaptainFragment extends Fragment {
 
         searchMember = getSearchedMember(Constants.BASE_URL);
         memberlistArrayList = new ArrayList<>();
+        addCaptain = RetrofitClient.getClient(Constants.BASE_URL).create(AddCaptain.class);
+
+        if (getArguments() != null) {
+            resGameList = getArguments().getParcelable("data");
+        }
+
     }
 
 
@@ -74,6 +90,7 @@ public class SelectCaptainFragment extends Fragment {
         tv_noData = view_main.findViewById(R.id.selectCaptain_tv_noData);
         progressBar = view_main.findViewById(R.id.selectCaptain_progressbar);
         button_next = view_main.findViewById(R.id.selectCaptain_btn_next);
+        edtTeamName = view_main.findViewById(R.id.edtTeamName);
 
 
         imageView_search.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +105,6 @@ public class SelectCaptainFragment extends Fragment {
                 }
 
 
-
             }
         });
 
@@ -96,16 +112,88 @@ public class SelectCaptainFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (memberlistArrayList.size() > 0) {
-                    Fragment fragment = new AddTeamMemberFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("data", memberlistArrayList.get(0));
-                    fragment.setArguments(bundle);
+                if (memberlistArrayList.size() > 0 && !edtTeamName.getText().toString().trim().isEmpty()
+                        && resGameList != null) {
 
-                    getFragmentManager().beginTransaction()
-                            .add(R.id.content_activity_ramat, fragment)
-                            .addToBackStack(null)
-                            .hide(SelectCaptainFragment.this).commit();
+
+                    showProgressDialog();
+
+
+                    addCaptain.addCaptain(edtTeamName.getText().toString().trim(),
+                            memberlistArrayList.get(0).getId(),
+                            resGameList.getId()).enqueue(new Callback<MyRes>() {
+                        @Override
+                        public void onResponse(Call<MyRes> call, Response<MyRes> response) {
+
+
+                            if (getActivity() != null && progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+
+
+                            if (response.isSuccessful()) {
+
+                                if (response.body().getMsg().equalsIgnoreCase("1x")) {
+
+                                    Toast.makeText(getActivity(), "Successfully added", Toast.LENGTH_LONG).show();
+
+
+                                    Fragment fragment = new CaptainVerifyFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("id", response.body().getId());
+                                    fragment.setArguments(bundle);
+
+                                    getFragmentManager().beginTransaction()
+                                            .add(R.id.content_activity_ramat, fragment)
+                                            .addToBackStack(null)
+                                            .hide(SelectCaptainFragment.this).commit();
+
+
+                                } else if (response.body().getMsg().equalsIgnoreCase("2x")) {
+                                    Toast.makeText(getActivity(), "Error occurred..", Toast.LENGTH_LONG).show();
+
+                                } else if (response.body().getMsg().equalsIgnoreCase("3x")) {
+                                    Toast.makeText(getActivity(), "Already registered team", Toast.LENGTH_LONG).show();
+
+                                } else if (response.body().getMsg().equalsIgnoreCase("4x")) {
+                                    Toast.makeText(getActivity(), "Mobile number not exist", Toast.LENGTH_LONG).show();
+
+                                } else if (response.body().getMsg().equalsIgnoreCase("5x")) {
+                                    Toast.makeText(getActivity(), "Sms error", Toast.LENGTH_LONG).show();
+
+                                }
+
+
+                            } else {
+                                Toast.makeText(getActivity(), "Error occurred..", Toast.LENGTH_LONG).show();
+
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<MyRes> call, Throwable t) {
+
+                            if (getActivity() != null && progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                            Toast.makeText(getActivity(), "Error occurred..", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+
+//                    Fragment fragment = new AddTeamMemberFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putParcelable("data", memberlistArrayList.get(0));
+//                    fragment.setArguments(bundle);
+//
+//                    getFragmentManager().beginTransaction()
+//                            .add(R.id.content_activity_ramat, fragment)
+//                            .addToBackStack(null)
+//                            .hide(SelectCaptainFragment.this).commit();
                 }
 
             }
@@ -168,6 +256,14 @@ public class SelectCaptainFragment extends Fragment {
         return RetrofitClient.getClient(baseUrl).create(SearchMember.class);
     }
 
+    public void showProgressDialog() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Loading..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+
     interface SearchMember {
 
         @POST("member/searchdetailsapi/")
@@ -176,5 +272,17 @@ public class SelectCaptainFragment extends Fragment {
 
 
     }
+
+    interface AddCaptain {
+
+        @POST("khelmahotsav/addteamapi/")
+        @FormUrlEncoded()
+        Call<MyRes> addCaptain(@Field("team_name") String team_name,
+                               @Field("id") String id,
+                               @Field("game_id") String game_id);
+
+
+    }
+
 
 }
