@@ -67,7 +67,8 @@ dependencies {
     implementation 'me.relex:circleindicator:1.2.2@aar'
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'pub.devrel:easypermissions:2.0.0'
 
 }
 repositories {

@@ -5,60 +5,82 @@ import com.google.gson.annotations.SerializedName;
 
 public class TeamDetailList {
 
-@SerializedName("id")
-@Expose
-private String id;
-@SerializedName("parent_id")
-@Expose
-private String parentId;
-@SerializedName("member_id")
-@Expose
-private String memberId;
-@SerializedName("tshirt_size")
-@Expose
-private String tshirtSize;
-@SerializedName("palyer_name")
-@Expose
-private String palyerName;
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("parent_id")
+    @Expose
+    private String parentId;
+    @SerializedName("member_id")
+    @Expose
+    private String memberId;
+    @SerializedName("tshirt_size")
+    @Expose
+    private String tshirtSize;
+    @SerializedName("palyer_name")
+    @Expose
+    private String palyerName;
+    @SerializedName("mobile")
+    @Expose
+    private String mobile;
+    @SerializedName("profile")
+    @Expose
+    private String profile;
 
-public String getId() {
-return id;
-}
+    public String getMobile() {
+        return mobile;
+    }
 
-public void setId(String id) {
-this.id = id;
-}
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-public String getParentId() {
-return parentId;
-}
+    public String getProfile() {
+        return profile;
+    }
 
-public void setParentId(String parentId) {
-this.parentId = parentId;
-}
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
-public String getMemberId() {
-return memberId;
-}
+    public String getId() {
+        return id;
+    }
 
-public void setMemberId(String memberId) {
-this.memberId = memberId;
-}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-public String getTshirtSize() {
-return tshirtSize;
-}
+    public String getParentId() {
+        return parentId;
+    }
 
-public void setTshirtSize(String tshirtSize) {
-this.tshirtSize = tshirtSize;
-}
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-public String getPalyerName() {
-return palyerName;
-}
+    public String getMemberId() {
+        return memberId;
+    }
 
-public void setPalyerName(String palyerName) {
-this.palyerName = palyerName;
-}
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getTshirtSize() {
+        return tshirtSize;
+    }
+
+    public void setTshirtSize(String tshirtSize) {
+        this.tshirtSize = tshirtSize;
+    }
+
+    public String getPalyerName() {
+        return palyerName;
+    }
+
+    public void setPalyerName(String palyerName) {
+        this.palyerName = palyerName;
+    }
 
 }

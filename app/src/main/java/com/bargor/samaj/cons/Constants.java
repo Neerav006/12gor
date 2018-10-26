@@ -27,6 +27,7 @@ public class Constants {
     public static final String IS_SSY="is_ssy";
     public static final String REG_IN_PROGRESS="reg_in_progress";
     public  static final String LAST_APP_VERSION="last_app";
+    public static final int WRITE_EXTERNAL_STORAGE = 100;
 
 
 }
