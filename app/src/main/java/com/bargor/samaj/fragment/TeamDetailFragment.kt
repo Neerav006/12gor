@@ -46,6 +46,7 @@ class TeamDetailFragment : Fragment() {
     private var playerList: ArrayList<TeamDetailList> = ArrayList()
     private val PDF_DIRECTORY = "/12Gor"
     private val FILE_NAME = "report"
+    private var captain:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +55,7 @@ class TeamDetailFragment : Fragment() {
             id = arguments!!.getString("id")
             game = arguments!!.getString("game")
             team = arguments!!.getString("team")
+            captain = arguments!!.getString("captain")
         }
 
 
@@ -88,6 +90,16 @@ class TeamDetailFragment : Fragment() {
                         if (response.isSuccessful) {
 
                             playerList = response.body() as ArrayList<TeamDetailList>
+
+                            for (items in playerList){
+                                if (items.palyerName == captain){
+                                    items.palyerName = captain.plus(" (C) ")
+                                    break
+                                }
+                            }
+
+
+
                             rvList.adapter = CustomAdapter(playerList)
 
 

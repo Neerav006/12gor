@@ -128,6 +128,7 @@ class TeamListFragment:Fragment() {
                     bundle.putString("id",dataSet[adapterPosition].id)
                     bundle.putString("game",dataSet[adapterPosition].gameName)
                     bundle.putString("team",dataSet[adapterPosition].teamName)
+                    bundle.putString("captain",dataSet[adapterPosition].capName)
                     fragment.arguments = bundle
 
                     fragmentManager!!.beginTransaction()

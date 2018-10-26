@@ -42,6 +42,7 @@
 
 -dontwarn okio.**
 
+-keep class com.itextpdf.text.pdf.** {*;}
 
 -keep class javax.annotation.** { *; }
 -keep class java.io.IOException
