@@ -27,6 +27,28 @@ public class TeamDetailList {
     @Expose
     private String profile;
 
+    public boolean isCaptain() {
+        return isCaptain;
+    }
+
+    public void setCaptain(boolean captain) {
+        isCaptain = captain;
+    }
+
+    private boolean isCaptain = false;
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    @SerializedName("size")
+    @Expose
+    private String size;
+
     public String getMobile() {
         return mobile;
     }

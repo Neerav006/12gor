@@ -1,6 +1,7 @@
 package com.bargor.samaj.fragment
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -8,18 +9,21 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
+import android.support.v4.view.MenuItemCompat
+import android.support.v7.app.AlertDialog
+import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bargor.samaj.R
+import com.bargor.samaj.Utils.Utils
 import com.bargor.samaj.common.RetrofitClient
 import com.bargor.samaj.cons.Constants
 import com.bargor.samaj.cons.Constants.WRITE_EXTERNAL_STORAGE
-import com.bargor.samaj.model.TeamDetailList
+import com.bargor.samaj.model.*
+import com.google.gson.Gson
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
@@ -30,6 +34,7 @@ import pub.devrel.easypermissions.PermissionRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -43,21 +48,42 @@ class TeamDetailFragment : Fragment() {
     private var id: String? = null
     private var game: String? = null
     private var team: String? = null
+    private var game_id: String? = null
+    private var cap_id: String? = null
     private var playerList: ArrayList<TeamDetailList> = ArrayList()
     private val PDF_DIRECTORY = "/12Gor"
     private val FILE_NAME = "report"
-    private var captain:String? = null
+    private var captain: String? = null
+    private var isEditMode = false
+    private var t_shirt_size: String? = null
+    private var team_size: String? = null
+    private var memberlistArrayList: java.util.ArrayList<Memberlist>? = null
+    private var selectedPlayerList: java.util.ArrayList<Memberlist> = java.util.ArrayList()
+    private var searchMember: SearchMember? = null
+    private lateinit var addTeamPlayersapi: AddTeamPlayersapi
+    private lateinit var progressDialog: ProgressDialog
+    private var gor: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        searchMember = getSearchedMember(Constants.BASE_URL)
+        memberlistArrayList = java.util.ArrayList()
+        val sharedPreferences = Utils.getSharedPreference(Constants.MY_PREF, activity)
+        gor = sharedPreferences.getString(Constants.GOR, null)
         if (arguments != null) {
             id = arguments!!.getString("id")
             game = arguments!!.getString("game")
             team = arguments!!.getString("team")
             captain = arguments!!.getString("captain")
+            game_id = arguments!!.getString("game_id")
+            cap_id = arguments!!.getString("member_id")
+            team_size = arguments!!.getString("team_size")
+            t_shirt_size = arguments!!.getString("t_size")
         }
 
+        addTeamPlayersapi = RetrofitClient.getClient(Constants.BASE_URL).create(AddTeamPlayersapi::class.java)
 
         getTeamDetailApi = RetrofitClient.getClient(Constants.BASE_URL).create(GetTeamDetailApi::class.java)
     }
@@ -72,6 +98,53 @@ class TeamDetailFragment : Fragment() {
 
         tvGameName.text = game
         tvTeamName.text = team
+
+        ivAddTeamPlayer.setOnClickListener {
+
+            if (edtMemberNo.text.toString().trim().isNotEmpty()) {
+
+                progressBar.visibility = View.VISIBLE
+
+                if (edtMemberNo.text.toString().trim().isNotEmpty()) {
+                    searchMember!!.getMemberDetail("1", edtMemberNo.text.toString().trim(), gor!!)
+                            .enqueue(object : Callback<AllMember> {
+                                override fun onResponse(call: Call<AllMember>, response: Response<AllMember>) {
+
+                                    progressBar.visibility = View.GONE
+                                    if (response.isSuccessful) {
+                                        memberlistArrayList = response.body()!!.memberlist as java.util.ArrayList<Memberlist>
+
+                                        if (memberlistArrayList!!.size > 0) {
+
+                                            val teamPlayer = TeamDetailList()
+                                            teamPlayer.memberId = memberlistArrayList!![0].id
+                                            teamPlayer.palyerName = memberlistArrayList!![0].name
+
+
+                                            showSizeDialog(teamPlayer, memberlistArrayList!![0].id,
+                                                    memberlistArrayList!![0].name)
+
+                                        } else {
+
+                                        }
+                                    }
+
+                                }
+
+                                override fun onFailure(call: Call<AllMember>, t: Throwable) {
+
+                                    progressBar.visibility = View.GONE
+
+                                }
+                            })
+
+                }
+
+
+            }
+        }
+
+
 
         rvList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
@@ -91,8 +164,8 @@ class TeamDetailFragment : Fragment() {
 
                             playerList = response.body() as ArrayList<TeamDetailList>
 
-                            for (items in playerList){
-                                if (items.palyerName == captain){
+                            for (items in playerList) {
+                                if (items.palyerName == captain) {
                                     items.palyerName = captain.plus(" (C) ")
                                     break
                                 }
@@ -156,7 +229,21 @@ class TeamDetailFragment : Fragment() {
                 tvMobile = v.findViewById(R.id.tvMobile)
                 tvRole = v.findViewById(R.id.tvRole)
 
-                ivRemove.visibility = View.GONE
+                if (isEditMode) {
+                    ivRemove.visibility = View.VISIBLE
+
+                    ivRemove.setOnClickListener {
+
+                        dataSet.remove(dataSet[adapterPosition])
+                        notifyItemRemoved(adapterPosition)
+                        notifyDataSetChanged()
+
+
+                    }
+                } else {
+                    ivRemove.visibility = View.GONE
+                }
+
 
             }
 
@@ -176,8 +263,18 @@ class TeamDetailFragment : Fragment() {
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
             viewHolder.tvMemNo.text = "Mem No:".plus(dataSet[position].memberId)
-            viewHolder.tvSize.text = "T Shirt Size: ".plus(dataSet[position].tshirtSize)
+            viewHolder.tvSize.text = "T Shirt Size: ".plus(dataSet[position].size)
             viewHolder.tvMemberName.text = dataSet[position].palyerName
+
+            if (isEditMode && dataSet[position].isCaptain){
+                viewHolder.ivRemove.visibility = View.GONE
+            }
+            else if (isEditMode && !dataSet[position].isCaptain ){
+                viewHolder.ivRemove.visibility = View.VISIBLE
+            }
+            else{
+                viewHolder.ivRemove.visibility = View.GONE
+            }
 
             // viewHolder.tvRole.text = "Caption:".plus(dataSet[position].capName)
 
@@ -198,6 +295,35 @@ class TeamDetailFragment : Fragment() {
 
         inflater?.inflate(R.menu.menu_pdf_report_view, menu)
 
+        val item = menu?.findItem(R.id.myswitch)
+
+        val actionView = item?.actionView as RelativeLayout
+
+        var switch = actionView.findViewById<Switch>(R.id.switchForActionBar)
+
+        switch.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            isEditMode = isChecked
+
+            if (isChecked) {
+
+                btnEditTeam.visibility = View.VISIBLE
+                ivAddTeamPlayer.visibility = View.VISIBLE
+                txtInMemberNo.visibility = View.VISIBLE
+                rvList.adapter = CustomAdapter(playerList)
+
+
+            } else {
+                txtInMemberNo.visibility = View.GONE
+                btnEditTeam.visibility = View.GONE
+                ivAddTeamPlayer.visibility = View.GONE
+                rvList.adapter = CustomAdapter(playerList)
+
+
+            }
+
+
+        }
 
     }
 
@@ -352,7 +478,7 @@ class TeamDetailFragment : Fragment() {
 
                     val playerDetail = PdfPTable(5)
                     playerDetail.widthPercentage = 100f
-                    playerDetail.setWidths(intArrayOf(1, 1, 3, 2 ,2))
+                    playerDetail.setWidths(intArrayOf(1, 1, 3, 2, 2))
                     playerDetail.horizontalAlignment = Element.ALIGN_CENTER
                     playerDetail.defaultCell.horizontalAlignment = Element.ALIGN_CENTER
                     playerDetail.defaultCell.paddingTop = 8f
@@ -400,7 +526,6 @@ class TeamDetailFragment : Fragment() {
                     document.add(playerDetail)
 
                 }
-
 
 
                 val footer1 = PdfPTable(1)
@@ -530,6 +655,181 @@ class TeamDetailFragment : Fragment() {
 
         // The directory is now empty so delete it
         return dir.delete()
+    }
+
+
+    //-----------------------DIALOG-------------------------------
+
+
+    fun showSizeDialog(member: TeamDetailList, no: String, name: String) {
+
+        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_add_team_member, null)
+
+        val mBuilder = AlertDialog.Builder(activity!!)
+                .setView(mDialogView)
+                .setTitle("Add Player")
+
+
+        val tvMemNo = mDialogView.findViewById<TextView>(R.id.tvMemNo)
+        val tvMemberName = mDialogView.findViewById<TextView>(R.id.tvMemberName)
+        val btnAdd = mDialogView.findViewById<Button>(R.id.btnAddMember)
+        val spSize = mDialogView.findViewById<AppCompatSpinner>(R.id.spSize)
+
+        tvMemNo.text = "Mem No: ".plus(no)
+        tvMemberName.text = name
+
+
+        val mAlertDialog = mBuilder.show()
+
+        btnAdd.setOnClickListener {
+            // TODO add in list
+            Utils.hideSoftKeyBoard(edtMemberNo, activity)
+
+            var isAdded = false
+
+            for (items in playerList) {
+
+                if (items.id == member.id) {
+                    isAdded = true
+                    break
+                }
+
+
+            }
+
+            if (!isAdded && playerList.size.toInt() < team_size!!.toInt()) {
+                member.size = spSize.selectedItem.toString()
+                playerList.add(member)
+                rvList.adapter = CustomAdapter(playerList)
+
+
+            }
+
+            mAlertDialog.cancel()
+
+
+        }
+
+        btnEditTeam.setOnClickListener {
+
+            if (playerList.size.toInt() < team_size!!.toInt()) {
+
+                // add player api
+
+                val addTeamPlayer = AddTeamPlayer()
+                addTeamPlayer.cId = cap_id
+                addTeamPlayer.cName = captain
+                addTeamPlayer.cSize = t_shirt_size
+                addTeamPlayer.teamId = id
+
+                val midList = java.util.ArrayList<MId>()
+
+                for (items in playerList) {
+                    if (items.memberId == cap_id) {
+                        items.isCaptain = true
+                        break
+                    }
+                }
+
+                for (items in playerList) {
+
+                    if (!items.isCaptain) {
+
+                        val mid = MId()
+                        mid.id = items.memberId
+                        mid.name = items.palyerName
+                        mid.size = items.tshirtSize
+                        midList.add(mid)
+                    }
+
+                }
+
+                addTeamPlayer.mId = midList
+
+                Log.e("player list", Gson().toJson(addTeamPlayer))
+
+                showProgressDialog()
+
+                addTeamPlayersapi.addPlayer(addTeamPlayer).enqueue(
+                        object : Callback<MyRes> {
+                            override fun onFailure(call: Call<MyRes>, t: Throwable) {
+
+//                                if (activity != null && progressDialog.isShowing)
+//                                    progressDialog.dismiss()
+
+                                Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                            }
+
+                            override fun onResponse(call: Call<MyRes>, response: Response<MyRes>) {
+//                                if (activity != null && progressDialog.isShowing)
+//                                    progressDialog.dismiss()
+
+
+                                if (response!!.isSuccessful) {
+
+                                    if (response.body()!!.msg.equals("true", true)) {
+
+                                        Toast.makeText(activity, "Successfully Team added..", Toast.LENGTH_LONG).show()
+                                        activity?.finish()
+
+
+                                    } else {
+                                        Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                                }
+
+                            }
+
+
+                        }
+                )
+
+
+            } else {
+                Toast.makeText(activity, "Total Player must be less or equal to ${team_size}", Toast.LENGTH_LONG).show()
+
+            }
+
+
+        }
+
+
+    }
+
+
+    interface AddTeamPlayersapi {
+        @POST("khelmahotsav/addTeamMemberApi")
+        fun addPlayer(@Body player: AddTeamPlayer): Call<MyRes>
+
+    }
+
+
+    fun showProgressDialog() {
+        progressDialog = ProgressDialog(activity)
+        progressDialog.setTitle("Loading..")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+    }
+
+    //------------------API--------------------
+    internal interface SearchMember {
+
+        @POST("member/searchdetailsapi/")
+        @FormUrlEncoded
+        fun getMemberDetail(@Field("type") type: String, @Field("search") search: String, @Field("gor") gor: String): Call<AllMember>
+
+
+    }
+
+    internal fun getSearchedMember(baseUrl: String): SearchMember {
+        return RetrofitClient.getClient(baseUrl).create(SearchMember::class.java)
     }
 
 }

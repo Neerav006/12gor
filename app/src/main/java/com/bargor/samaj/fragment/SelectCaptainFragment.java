@@ -56,14 +56,14 @@ public class SelectCaptainFragment extends Fragment {
     private ResGameList resGameList;
     private AddCaptain addCaptain;
     private ProgressDialog progressDialog;
-
+    private String papa_id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = Utils.getSharedPreference(Constants.MY_PREF, getActivity());
         gor = sharedPreferences.getString(Constants.GOR, null);
-
+        papa_id = sharedPreferences.getString(Constants.ID, "");
         searchMember = getSearchedMember(Constants.BASE_URL);
         memberlistArrayList = new ArrayList<>();
         addCaptain = RetrofitClient.getClient(Constants.BASE_URL).create(AddCaptain.class);
@@ -119,7 +119,7 @@ public class SelectCaptainFragment extends Fragment {
                     showProgressDialog();
 
 
-                    addCaptain.addCaptain(edtTeamName.getText().toString().trim(),
+                    addCaptain.addCaptain(papa_id, edtTeamName.getText().toString().trim(),
                             memberlistArrayList.get(0).getId(),
                             resGameList.getId()).enqueue(new Callback<MyRes>() {
                         @Override
@@ -141,11 +141,11 @@ public class SelectCaptainFragment extends Fragment {
                                     Fragment fragment = new CaptainVerifyFragment();
                                     Bundle bundle = new Bundle();
                                     bundle.putString("id", response.body().getId());
-                                    bundle.putString("c_id",memberlistArrayList.get(0).getId());
-                                    bundle.putString("c_name",memberlistArrayList.get(0).getName());
-                                    bundle.putString("c_size",spinner_size.getSelectedItem().toString());
-                                    bundle.putParcelable("game",resGameList);
-                                    bundle.putParcelable("data",memberlistArrayList.get(0));
+                                    bundle.putString("c_id", memberlistArrayList.get(0).getId());
+                                    bundle.putString("c_name", memberlistArrayList.get(0).getName());
+                                    bundle.putString("c_size", spinner_size.getSelectedItem().toString());
+                                    bundle.putParcelable("game", resGameList);
+                                    bundle.putParcelable("data", memberlistArrayList.get(0));
                                     fragment.setArguments(bundle);
 
                                     getFragmentManager().beginTransaction()
@@ -282,7 +282,8 @@ public class SelectCaptainFragment extends Fragment {
 
         @POST("khelmahotsav/addteamapi/")
         @FormUrlEncoded()
-        Call<MyRes> addCaptain(@Field("team_name") String team_name,
+        Call<MyRes> addCaptain(@Field("papa_id") String papa_id,
+                               @Field("team_name") String team_name,
                                @Field("id") String id,
                                @Field("game_id") String game_id);
 

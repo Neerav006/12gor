@@ -117,7 +117,17 @@ class TeamListFragment:Fragment() {
             val tvSize: TextView
             val ivRemove: ImageView
             val tvMobile: TextView
+
             val tvRole: TextView
+
+
+//            captainMember = arguments?.getParcelable("data")
+//            team_id = arguments?.getString("id")
+//            c_name = arguments?.getString("c_name")
+//            c_id = arguments?.getString("c_id")
+//            c_size = arguments?.getString("c_size")
+//            game = arguments?.getParcelable("game")
+
 
             init {
                 // Define click listener for the ViewHolder's View.
@@ -129,6 +139,11 @@ class TeamListFragment:Fragment() {
                     bundle.putString("game",dataSet[adapterPosition].gameName)
                     bundle.putString("team",dataSet[adapterPosition].teamName)
                     bundle.putString("captain",dataSet[adapterPosition].capName)
+                    bundle.putString("member_id",dataSet[adapterPosition].member_id)
+                    bundle.putString("game_id",dataSet[adapterPosition].game_id)
+                    bundle.putString("team_size",dataSet[adapterPosition].team_size)
+                    bundle.putString("t_size",dataSet[adapterPosition].t_size)
+
                     fragment.arguments = bundle
 
                     fragmentManager!!.beginTransaction()
@@ -146,8 +161,10 @@ class TeamListFragment:Fragment() {
                 ivRemove = v.findViewById(R.id.ivRemove)
                 tvMobile = v.findViewById(R.id.tvMobile)
                 tvRole = v.findViewById(R.id.tvRole)
-
                 ivRemove.visibility = View.GONE
+
+
+
 
             }
 

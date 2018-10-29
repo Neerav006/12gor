@@ -261,7 +261,7 @@ class AddTeamMemberFragment : Fragment() {
 
         btnAddTeam.setOnClickListener {
 
-            if (selectedPlayerList.size.toInt() == game!!.team_size.toInt()) {
+            if (selectedPlayerList.size.toInt() < game!!.team_size.toInt()) {
 
                 // add player api
 
@@ -335,7 +335,7 @@ class AddTeamMemberFragment : Fragment() {
 
 
             } else {
-                Toast.makeText(activity, "Total Player must be equal to ${game!!.team_size}", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Total Player must be less or equal to ${game!!.team_size}", Toast.LENGTH_LONG).show()
 
             }
 
