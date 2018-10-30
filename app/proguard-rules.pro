@@ -52,6 +52,10 @@
 -keepclassmembers class * {
     @com.facebook.common.internal.DoNotStrip *;
 }
+-keep class com.itextpdf.text.** { *; }
+-keepclassmembers  class *  {
+    @com.itextpdf.text *;
+}
 -keepattributes EnclosingMethod
 -keepattributes InnerClasses
 # Keep native methods
@@ -73,3 +77,7 @@
 -dontwarn  com.itextpdf.text.pdf.**
 -dontwarn android.net.http.AndroidHttpClient
 -dontwarn com.google.android.gms.**
+
+
+# proguard new rule
+

@@ -44,7 +44,7 @@ public class SelectCaptainFragment extends Fragment {
     EditText editText_id;
     ImageView imageView_search;
     LinearLayout linearLayout_memberInfo;
-    TextView tv_id, tv_name, tv_number, tv_city, tv_noData;
+    TextView tv_id, tv_name, tv_number, tv_city, tv_noData, tv_village;
     Spinner spinner_size;
     ProgressBar progressBar;
     Button button_next;
@@ -91,6 +91,7 @@ public class SelectCaptainFragment extends Fragment {
         progressBar = view_main.findViewById(R.id.selectCaptain_progressbar);
         button_next = view_main.findViewById(R.id.selectCaptain_btn_next);
         edtTeamName = view_main.findViewById(R.id.edtTeamName);
+        tv_village = view_main.findViewById(R.id.selectCaptain_tv_village);
 
 
         imageView_search.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +122,7 @@ public class SelectCaptainFragment extends Fragment {
 
                     addCaptain.addCaptain(papa_id, edtTeamName.getText().toString().trim(),
                             memberlistArrayList.get(0).getId(),
-                            resGameList.getId(),spinner_size.getSelectedItem().toString()).enqueue(new Callback<MyRes>() {
+                            resGameList.getId(), spinner_size.getSelectedItem().toString()).enqueue(new Callback<MyRes>() {
                         @Override
                         public void onResponse(Call<MyRes> call, Response<MyRes> response) {
 
@@ -229,6 +230,7 @@ public class SelectCaptainFragment extends Fragment {
                                 tv_name.setText(memberlistArrayList.get(0).getName());
                                 tv_number.setText(memberlistArrayList.get(0).getMobile());
                                 tv_city.setText(memberlistArrayList.get(0).getCity());
+                                tv_village.setText(memberlistArrayList.get(0).getVillage());
 
 
                             } else {

@@ -3,6 +3,9 @@ package com.bargor.samaj.fragment
 import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +28,7 @@ import com.bargor.samaj.cons.Constants.WRITE_EXTERNAL_STORAGE
 import com.bargor.samaj.model.*
 import com.google.gson.Gson
 import com.itextpdf.text.*
+import com.itextpdf.text.pdf.PdfLabColor
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.android.synthetic.main.fragment_team_detail.*
@@ -38,6 +42,7 @@ import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -82,6 +87,9 @@ class TeamDetailFragment : Fragment() {
             team_size = arguments!!.getString("team_size")
             t_shirt_size = arguments!!.getString("t_size")
         }
+
+
+
 
         addTeamPlayersapi = RetrofitClient.getClient(Constants.BASE_URL).create(AddTeamPlayersapi::class.java)
 
@@ -254,6 +262,8 @@ class TeamDetailFragment : Fragment() {
 
                             playerList = response.body() as ArrayList<TeamDetailList>
 
+                            tvRemainingCounter.text = "Remaining: ${team_size.toString().toInt() - playerList.size}"
+
                             for (items in playerList) {
                                 if (items.palyerName == captain) {
                                     items.palyerName = captain.plus(" (C) ")
@@ -363,13 +373,11 @@ class TeamDetailFragment : Fragment() {
             viewHolder.tvSize.text = "T Shirt Size: ".plus(dataSet[position].size)
             viewHolder.tvMemberName.text = dataSet[position].palyerName
 
-            if (isEditMode && dataSet[position].isCaptain){
+            if (isEditMode && dataSet[position].isCaptain) {
                 viewHolder.ivRemove.visibility = View.GONE
-            }
-            else if (isEditMode && !dataSet[position].isCaptain ){
+            } else if (isEditMode && !dataSet[position].isCaptain) {
                 viewHolder.ivRemove.visibility = View.VISIBLE
-            }
-            else{
+            } else {
                 viewHolder.ivRemove.visibility = View.GONE
             }
 
@@ -396,7 +404,7 @@ class TeamDetailFragment : Fragment() {
 
         val actionView = item?.actionView as RelativeLayout
 
-        var switch = actionView.findViewById<Switch>(R.id.switchForActionBar)
+        val switch = actionView.findViewById<Switch>(R.id.switchForActionBar)
 
         switch.setOnCheckedChangeListener { buttonView, isChecked ->
 
@@ -478,6 +486,14 @@ class TeamDetailFragment : Fragment() {
 
                 document.open()
 
+                val rect = Rectangle(10f, 10f, 585f, 832f)
+
+
+                rect.borderColor = BaseColor.BLACK
+                rect.borderWidth = 2f
+
+                rect.border = Rectangle.BOX
+
                 val paragraph = Paragraph()
                 val fntSize: Float
                 val lineSpacing: Float
@@ -488,9 +504,48 @@ class TeamDetailFragment : Fragment() {
                 paragraph.spacingAfter = 20f
                 paragraph.alignment = Element.ALIGN_CENTER
                 paragraph.add(Phrase(
-                        lineSpacing, "12 GOR KADVA PATIDAR SAMAJ",
+                        lineSpacing, "12 GOR KADVA PATIDAR SAMAJ\n" +
+                        "Daramali ,Sabarkantha ,Gujarat",
                         FontFactory.getFont(FontFactory.TIMES_BOLD, 20f)
                 ))
+
+
+
+                try {
+                    // get input stream
+                    val stream = ByteArrayOutputStream()
+                    val ims = context!!.getAssets().open("umiyama.png")
+                    val bmp = BitmapFactory.decodeStream(ims)
+
+                    bmp.compress(Bitmap.CompressFormat.PNG, 50, stream)
+
+
+                    val headerTable = PdfPTable(2)
+                    headerTable.widthPercentage = 100f
+                    headerTable.setWidths(intArrayOf(1, 4))
+                    headerTable.defaultCell.fixedHeight = 100f
+                    headerTable.defaultCell.border = Rectangle.NO_BORDER
+                    headerTable.defaultCell.isUseAscender = true
+                    headerTable.defaultCell.verticalAlignment = Element.ALIGN_MIDDLE
+                    headerTable.defaultCell.paddingTop = 5f
+                    headerTable.defaultCell.paddingBottom = 5f
+
+                    val i = Image.getInstance(stream.toByteArray())
+                    i.scalePercent(100f)
+                    headerTable.addCell(i)
+
+                    headerTable.addCell(Phrase(
+                            lineSpacing, "12 GOR KADVA PATIDAR SAMAJ\n" +
+                            "        Daramali,Sabarkantha,Gujarat",
+                            FontFactory.getFont(FontFactory.TIMES_BOLD, 20f)
+                    ))
+
+                    document.add(headerTable)
+
+
+                } catch (ex: IOException) {
+
+                }
 
 
                 val teamNameParagraph = Paragraph()
@@ -564,7 +619,7 @@ class TeamDetailFragment : Fragment() {
                 )
 
 
-                document.add(paragraph)
+                document.add(rect)
                 document.add(teamNameParagraph)
                 document.add(gameNameParagraph)
                 document.add(teamDetailHeader)
@@ -806,7 +861,6 @@ class TeamDetailFragment : Fragment() {
 
 
         }
-
 
 
     }
