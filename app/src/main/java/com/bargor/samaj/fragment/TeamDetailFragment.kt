@@ -188,16 +188,16 @@ class TeamDetailFragment : Fragment() {
                         object : Callback<MyRes> {
                             override fun onFailure(call: Call<MyRes>, t: Throwable) {
 
-//                                if (activity != null && progressDialog.isShowing)
-//                                    progressDialog.dismiss()
+                                if (activity != null && progressDialog.isShowing)
+                                    progressDialog.dismiss()
 
                                 Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
 
                             }
 
                             override fun onResponse(call: Call<MyRes>, response: Response<MyRes>) {
-//                                if (activity != null && progressDialog.isShowing)
-//                                    progressDialog.dismiss()
+                                if (activity != null && progressDialog.isShowing)
+                                    progressDialog.dismiss()
 
 
                                 if (response!!.isSuccessful) {
