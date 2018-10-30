@@ -20,7 +20,7 @@ public class MyTeamList {
     @SerializedName("game_name")
     @Expose
     private String gameName;
-    @SerializedName("teamSize")
+    @SerializedName("game_size")
     @Expose
     private String team_size;
     @SerializedName("captainTShirtSize")

@@ -121,6 +121,10 @@ class TeamDetailFragment : Fragment() {
                                             teamPlayer.palyerName = memberlistArrayList!![0].name
 
 
+
+
+
+
                                             showSizeDialog(teamPlayer, memberlistArrayList!![0].id,
                                                     memberlistArrayList!![0].name)
 
@@ -142,6 +146,92 @@ class TeamDetailFragment : Fragment() {
 
 
             }
+        }
+
+
+        btnEditTeam.setOnClickListener {
+
+            if (playerList.size.toInt() < team_size!!.toInt()) {
+
+                // add player api
+
+                val addTeamPlayer = AddTeamPlayer()
+                addTeamPlayer.cId = cap_id
+                addTeamPlayer.cName = captain
+                addTeamPlayer.cSize = t_shirt_size
+                addTeamPlayer.teamId = id
+
+                val midList = java.util.ArrayList<MId>()
+
+
+
+                for (items in playerList) {
+
+                    if (!items.isCaptain) {
+
+                        val mid = MId()
+                        mid.id = items.memberId
+                        mid.name = items.palyerName
+                        mid.size = items.size
+                        midList.add(mid)
+                    }
+
+                }
+
+                addTeamPlayer.mId = midList
+
+                Log.e("player list", Gson().toJson(addTeamPlayer))
+
+                showProgressDialog()
+
+                addTeamPlayersapi.addPlayer(addTeamPlayer).enqueue(
+                        object : Callback<MyRes> {
+                            override fun onFailure(call: Call<MyRes>, t: Throwable) {
+
+//                                if (activity != null && progressDialog.isShowing)
+//                                    progressDialog.dismiss()
+
+                                Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                            }
+
+                            override fun onResponse(call: Call<MyRes>, response: Response<MyRes>) {
+//                                if (activity != null && progressDialog.isShowing)
+//                                    progressDialog.dismiss()
+
+
+                                if (response!!.isSuccessful) {
+
+                                    if (response.body()!!.msg.equals("true", true)) {
+
+                                        Toast.makeText(activity, "Successfully Team added..", Toast.LENGTH_LONG).show()
+                                        activity?.finish()
+
+
+                                    } else {
+                                        Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
+
+                                }
+
+                            }
+
+
+                        }
+                )
+
+
+            } else {
+                Toast.makeText(activity, "Total Player must be less or equal to ${team_size}", Toast.LENGTH_LONG).show()
+
+            }
+
+
         }
 
 
@@ -167,6 +257,13 @@ class TeamDetailFragment : Fragment() {
                             for (items in playerList) {
                                 if (items.palyerName == captain) {
                                     items.palyerName = captain.plus(" (C) ")
+                                    break
+                                }
+                            }
+
+                            for (items in playerList) {
+                                if (items.memberId == cap_id) {
+                                    items.isCaptain = true
                                     break
                                 }
                             }
@@ -510,7 +607,7 @@ class TeamDetailFragment : Fragment() {
 
                     playerDetail.addCell(
                             Phrase(
-                                    lineSpacing, items.tshirtSize,
+                                    lineSpacing, items.size,
                                     FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
                             )
                     )
@@ -689,7 +786,7 @@ class TeamDetailFragment : Fragment() {
 
             for (items in playerList) {
 
-                if (items.id == member.id) {
+                if (items.memberId == member.memberId) {
                     isAdded = true
                     break
                 }
@@ -710,95 +807,6 @@ class TeamDetailFragment : Fragment() {
 
         }
 
-        btnEditTeam.setOnClickListener {
-
-            if (playerList.size.toInt() < team_size!!.toInt()) {
-
-                // add player api
-
-                val addTeamPlayer = AddTeamPlayer()
-                addTeamPlayer.cId = cap_id
-                addTeamPlayer.cName = captain
-                addTeamPlayer.cSize = t_shirt_size
-                addTeamPlayer.teamId = id
-
-                val midList = java.util.ArrayList<MId>()
-
-                for (items in playerList) {
-                    if (items.memberId == cap_id) {
-                        items.isCaptain = true
-                        break
-                    }
-                }
-
-                for (items in playerList) {
-
-                    if (!items.isCaptain) {
-
-                        val mid = MId()
-                        mid.id = items.memberId
-                        mid.name = items.palyerName
-                        mid.size = items.tshirtSize
-                        midList.add(mid)
-                    }
-
-                }
-
-                addTeamPlayer.mId = midList
-
-                Log.e("player list", Gson().toJson(addTeamPlayer))
-
-                showProgressDialog()
-
-                addTeamPlayersapi.addPlayer(addTeamPlayer).enqueue(
-                        object : Callback<MyRes> {
-                            override fun onFailure(call: Call<MyRes>, t: Throwable) {
-
-//                                if (activity != null && progressDialog.isShowing)
-//                                    progressDialog.dismiss()
-
-                                Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
-
-                            }
-
-                            override fun onResponse(call: Call<MyRes>, response: Response<MyRes>) {
-//                                if (activity != null && progressDialog.isShowing)
-//                                    progressDialog.dismiss()
-
-
-                                if (response!!.isSuccessful) {
-
-                                    if (response.body()!!.msg.equals("true", true)) {
-
-                                        Toast.makeText(activity, "Successfully Team added..", Toast.LENGTH_LONG).show()
-                                        activity?.finish()
-
-
-                                    } else {
-                                        Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
-
-                                    }
-
-
-                                } else {
-                                    Toast.makeText(activity, "Error occurred", Toast.LENGTH_LONG).show()
-
-                                }
-
-                            }
-
-
-                        }
-                )
-
-
-            } else {
-                Toast.makeText(activity, "Total Player must be less or equal to ${team_size}", Toast.LENGTH_LONG).show()
-
-            }
-
-
-        }
 
 
     }
