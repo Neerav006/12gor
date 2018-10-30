@@ -121,7 +121,7 @@ public class SelectCaptainFragment extends Fragment {
 
                     addCaptain.addCaptain(papa_id, edtTeamName.getText().toString().trim(),
                             memberlistArrayList.get(0).getId(),
-                            resGameList.getId()).enqueue(new Callback<MyRes>() {
+                            resGameList.getId(),spinner_size.getSelectedItem().toString()).enqueue(new Callback<MyRes>() {
                         @Override
                         public void onResponse(Call<MyRes> call, Response<MyRes> response) {
 
@@ -285,7 +285,8 @@ public class SelectCaptainFragment extends Fragment {
         Call<MyRes> addCaptain(@Field("papa_id") String papa_id,
                                @Field("team_name") String team_name,
                                @Field("id") String id,
-                               @Field("game_id") String game_id);
+                               @Field("game_id") String game_id,
+                               @Field("size") String size);
 
 
     }
