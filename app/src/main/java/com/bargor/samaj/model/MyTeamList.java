@@ -36,6 +36,20 @@ public class MyTeamList {
     @Expose
     private String game_id;
 
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    @SerializedName("timestamp")
+    @Expose
+    private String regDate;
+
+
     public String getTeam_size() {
         return team_size;
     }

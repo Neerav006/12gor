@@ -143,6 +143,7 @@ class TeamListFragment:Fragment() {
                     bundle.putString("game_id",dataSet[adapterPosition].game_id)
                     bundle.putString("team_size",dataSet[adapterPosition].team_size)
                     bundle.putString("t_size",dataSet[adapterPosition].t_size)
+                    bundle.putString("reg_date",dataSet[adapterPosition].regDate);
 
                     fragment.arguments = bundle
 

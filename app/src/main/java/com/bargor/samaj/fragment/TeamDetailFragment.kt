@@ -62,6 +62,7 @@ class TeamDetailFragment : Fragment() {
     private var isEditMode = false
     private var t_shirt_size: String? = null
     private var team_size: String? = null
+    private var reg_date: String? = null
     private var memberlistArrayList: java.util.ArrayList<Memberlist>? = null
     private var selectedPlayerList: java.util.ArrayList<Memberlist> = java.util.ArrayList()
     private var searchMember: SearchMember? = null
@@ -86,6 +87,7 @@ class TeamDetailFragment : Fragment() {
             cap_id = arguments!!.getString("member_id")
             team_size = arguments!!.getString("team_size")
             t_shirt_size = arguments!!.getString("t_size")
+            reg_date = arguments!!.getString("reg_date")
         }
 
 
@@ -344,6 +346,7 @@ class TeamDetailFragment : Fragment() {
                         dataSet.remove(dataSet[adapterPosition])
                         notifyItemRemoved(adapterPosition)
                         notifyDataSetChanged()
+                        tvRemainingCounter.text = "Remaining: ${team_size.toString().toInt() - playerList.size}"
 
 
                     }
@@ -504,11 +507,14 @@ class TeamDetailFragment : Fragment() {
                 paragraph.spacingAfter = 20f
                 paragraph.alignment = Element.ALIGN_CENTER
                 paragraph.add(Phrase(
-                        lineSpacing, "12 GOR KADVA PATIDAR SAMAJ\n" +
-                        "Daramali ,Sabarkantha ,Gujarat",
+                        lineSpacing, "12 GOR KADVA PATIDAR SAMAJ\n",
                         FontFactory.getFont(FontFactory.TIMES_BOLD, 20f)
                 ))
-
+                paragraph.add(Chunk("\n"))
+                paragraph.add(Phrase(
+                        lineSpacing, "Daramali, Sabarkantha, Gujarat\n",
+                        FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
+                ))
 
 
                 try {
@@ -534,11 +540,7 @@ class TeamDetailFragment : Fragment() {
                     i.scalePercent(100f)
                     headerTable.addCell(i)
 
-                    headerTable.addCell(Phrase(
-                            lineSpacing, "12 GOR KADVA PATIDAR SAMAJ\n" +
-                            "        Daramali,Sabarkantha,Gujarat",
-                            FontFactory.getFont(FontFactory.TIMES_BOLD, 20f)
-                    ))
+                    headerTable.addCell(paragraph)
 
                     document.add(headerTable)
 
@@ -548,26 +550,128 @@ class TeamDetailFragment : Fragment() {
                 }
 
 
-                val teamNameParagraph = Paragraph()
-                teamNameParagraph.spacingAfter = 10f
-                teamNameParagraph.add(Phrase(
-                        lineSpacing, "Team Name:-    ".plus(teamName.toUpperCase()),
-                        FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
-                ))
-
-
-                val gameNameParagraph = Paragraph()
-                gameNameParagraph.spacingAfter = 10f
-                gameNameParagraph.add(Phrase(
-                        lineSpacing, "Game Name:-    ".plus(gameName.toUpperCase()),
-                        FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
-                ))
+//                val teamNameParagraph = Paragraph()
+//                teamNameParagraph.spacingAfter = 10f
+//                teamNameParagraph.add(Phrase(
+//                        lineSpacing, "Team Name:-    ".plus(teamName.toUpperCase()),
+//                        FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+//                ))
+//
+//
+//                val gameNameParagraph = Paragraph()
+//                gameNameParagraph.spacingAfter = 10f
+//                gameNameParagraph.add(Phrase(
+//                        lineSpacing, "Game Name:-    ".plus(gameName.toUpperCase()),
+//                        FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+//                ))
 
                 val teamDetailHeader = Paragraph()
-                teamDetailHeader.spacingAfter = 20f
-                teamDetailHeader.spacingBefore = 20f
+                teamDetailHeader.spacingAfter = 10f
+                teamDetailHeader.spacingBefore = 10f
+                teamDetailHeader.alignment = Element.ALIGN_CENTER
                 teamDetailHeader.add(Phrase(
                         lineSpacing, "Team Detail",
+                        FontFactory.getFont(FontFactory.TIMES_BOLD, 15f)
+                ))
+
+
+                val titleHeader = PdfPTable(5)
+                titleHeader.widthPercentage = 100f
+                titleHeader.setWidths(intArrayOf(1, 2, 1, 2,1))
+                titleHeader.horizontalAlignment = Element.ALIGN_CENTER
+                titleHeader.defaultCell.horizontalAlignment = Element.ALIGN_CENTER
+                titleHeader.defaultCell.paddingTop = 5f
+                titleHeader.defaultCell.paddingBottom = 5f
+                titleHeader.addCell(
+                        Phrase(
+                                lineSpacing, "Team No",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
+                        )
+                )
+
+                titleHeader.addCell(
+                        Phrase(
+                                lineSpacing, "Team Name",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
+                        )
+                )
+
+                titleHeader.addCell(
+                        Phrase(
+                                lineSpacing, "Game Name",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
+                        )
+                )
+
+                titleHeader.addCell(
+                        Phrase(
+                                lineSpacing, "Registration Date",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
+                        )
+                )
+
+
+
+                titleHeader.addCell(
+                        Phrase(
+                                lineSpacing, "Team Size",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
+                        )
+                )
+
+
+                val titleValue = PdfPTable(5)
+                titleValue.widthPercentage = 100f
+                titleValue.setWidths(intArrayOf(1,2, 1, 2, 1))
+                titleValue.horizontalAlignment = Element.ALIGN_CENTER
+                titleValue.defaultCell.horizontalAlignment = Element.ALIGN_CENTER
+                titleValue.defaultCell.paddingTop = 5f
+                titleValue.defaultCell.paddingBottom = 5f
+
+                titleValue.addCell(
+                        Phrase(
+                                lineSpacing,id ,
+                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                        )
+                )
+
+                titleValue.addCell(
+                        Phrase(
+                                lineSpacing, teamName,
+                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                        )
+                )
+
+                titleValue.addCell(
+                        Phrase(
+                                lineSpacing, gameName,
+                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                        )
+                )
+
+                titleValue.addCell(
+                        Phrase(
+                                lineSpacing, reg_date,
+                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                        )
+                )
+
+
+
+                titleValue.addCell(
+                        Phrase(
+                                lineSpacing, team_size,
+                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                        )
+                )
+
+
+                val playerHeader = Paragraph()
+                playerHeader.spacingAfter = 10f
+                playerHeader.spacingBefore = 10f
+                playerHeader.alignment = Element.ALIGN_CENTER
+                playerHeader.add(Phrase(
+                        lineSpacing, "Player Detail",
                         FontFactory.getFont(FontFactory.TIMES_BOLD, 15f)
                 ))
 
@@ -584,21 +688,21 @@ class TeamDetailFragment : Fragment() {
                 theader.addCell(
                         Phrase(
                                 lineSpacing, "Sr No",
-                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
                         )
                 )
 
                 theader.addCell(
                         Phrase(
                                 lineSpacing, "Mem No",
-                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
                         )
                 )
 
                 theader.addCell(
                         Phrase(
                                 lineSpacing, "Name",
-                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
                         )
                 )
 
@@ -607,22 +711,26 @@ class TeamDetailFragment : Fragment() {
                 theader.addCell(
                         Phrase(
                                 lineSpacing, "T-Size",
-                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
                         )
                 )
 
                 theader.addCell(
                         Phrase(
                                 lineSpacing, "Sign",
-                                FontFactory.getFont(FontFactory.TIMES_BOLD, 10f)
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 10f)
                         )
                 )
 
 
                 document.add(rect)
-                document.add(teamNameParagraph)
-                document.add(gameNameParagraph)
+//                document.add(teamNameParagraph)
+//                document.add(gameNameParagraph)
                 document.add(teamDetailHeader)
+                document.add(titleHeader)
+                document.add(titleValue)
+                document.add(playerHeader)
+
                 document.add(theader)
 
 
@@ -679,6 +787,14 @@ class TeamDetailFragment : Fragment() {
 
                 }
 
+                val officeUseHeader = Paragraph()
+                officeUseHeader.spacingAfter = 10f
+                officeUseHeader.spacingBefore = 10f
+                officeUseHeader.add(Phrase(
+                        lineSpacing, "For office use only",
+                        FontFactory.getFont(FontFactory.TIMES_BOLD, 15f)
+                ))
+
 
                 val footer1 = PdfPTable(1)
                 footer1.widthPercentage = 100f
@@ -711,6 +827,63 @@ class TeamDetailFragment : Fragment() {
                 )
 
 
+                val receiverTable = PdfPTable(3)
+                receiverTable.widthPercentage = 100f
+                receiverTable.setWidths(intArrayOf(1, 1, 2))
+                receiverTable.defaultCell.paddingTop = 15f
+                receiverTable.defaultCell.paddingBottom = 15f
+
+
+                receiverTable.addCell(
+                        Phrase(
+                                lineSpacing, "Receive Date ____________",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 8f)
+                        )
+                )
+
+                receiverTable.addCell(
+                        Phrase(
+                                lineSpacing, "Receive Amount ___________",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 8f)
+                        )
+                )
+
+                receiverTable.addCell(
+                        Phrase(
+                                lineSpacing, "Receiver Sign And Name_________________________",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 8f)
+                        )
+                )
+
+
+                val gameCoordinate = PdfPTable(2)
+                gameCoordinate.widthPercentage = 100f
+                gameCoordinate.spacingBefore = 10f
+                gameCoordinate.spacingAfter = 10f
+                gameCoordinate.setWidths(intArrayOf(1, 1))
+                gameCoordinate.defaultCell.paddingTop = 15f
+                gameCoordinate.defaultCell.paddingBottom = 15f
+
+                gameCoordinate.addCell(
+                        Phrase(
+                                lineSpacing, "President Sign ________________________",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 8f)
+                        )
+                )
+
+                gameCoordinate.addCell(
+                        Phrase(
+                                lineSpacing, "Game Coordinator Sign ________________________________",
+                                FontFactory.getFont(FontFactory.TIMES_ROMAN, 8f)
+                        )
+                )
+
+
+
+
+                document.add(officeUseHeader)
+                document.add(receiverTable)
+                document.add(gameCoordinate)
 
                 document.add(footer1)
                 document.add(footer2)
@@ -853,6 +1026,7 @@ class TeamDetailFragment : Fragment() {
                 member.size = spSize.selectedItem.toString()
                 playerList.add(member)
                 rvList.adapter = CustomAdapter(playerList)
+                tvRemainingCounter.text = "Remaining: ${team_size.toString().toInt() - playerList.size}"
 
 
             }

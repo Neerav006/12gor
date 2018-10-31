@@ -119,10 +119,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTeamName"
+        app:layout_constraintTop_toBottomOf="@+id/txtInMemberNo"
         tools:text="Remaining: 10" />
 
 </android.support.constraint.ConstraintLayout>
