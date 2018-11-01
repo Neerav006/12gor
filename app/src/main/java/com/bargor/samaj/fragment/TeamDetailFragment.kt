@@ -22,7 +22,7 @@ import android.view.*
 import android.widget.*
 import com.bargor.samaj.R
 import com.bargor.samaj.Utils.Utils
-import com.bargor.samaj.common.RetrofitClient
+import com.bargor.samaj.common.*
 import com.bargor.samaj.cons.Constants
 import com.bargor.samaj.cons.Constants.WRITE_EXTERNAL_STORAGE
 import com.bargor.samaj.model.*
@@ -264,7 +264,12 @@ class TeamDetailFragment : Fragment() {
 
                             playerList = response.body() as ArrayList<TeamDetailList>
 
-                            tvRemainingCounter.text = "Remaining: ${team_size.toString().toInt() - playerList.size}"
+                           // tvRemainingCounter.text = "Remaining: ${team_size.toString().toInt() - playerList.size}"
+
+
+                            val remainingCounter = spannable { bold(italic("Remaining: ")) + italic((team_size.toString().toInt() - playerList.size).toString())}
+                            tvRemainingCounter.text = remainingCounter
+
 
                             for (items in playerList) {
                                 if (items.palyerName == captain) {
