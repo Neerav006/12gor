@@ -1,10 +1,15 @@
 package com.bargor.samaj.view;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +24,7 @@ import android.widget.Toast;
 
 import com.bargor.samaj.R;
 import com.bargor.samaj.Utils.Utils;
+import com.bargor.samaj.common.NetworkSchedulerService;
 import com.bargor.samaj.common.RetrofitClient;
 import com.bargor.samaj.cons.Constants;
 import com.bargor.samaj.model.MyRes;
@@ -56,6 +62,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         SharedPreferences sharedPreferences = Utils.getSharedPreference(Constants.MY_PREF, getApplicationContext());
         loginAPI = getAPIService(BASE_URL);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            scheduleJob();
+        }
 
         user_name = sharedPreferences.getString("ok", "");
         reg_in_progress = sharedPreferences.getString(Constants.REG_IN_PROGRESS, "");
@@ -239,5 +249,21 @@ public class LoginActivity extends AppCompatActivity {
         Call<MyRes> login(@Field("email") String username,
                           @Field("password") String pwd, @Field("root") String root
         );
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void scheduleJob() {
+        JobInfo myJob = new JobInfo.Builder(0, new ComponentName(this, NetworkSchedulerService.class))
+                .setRequiresCharging(true)
+                .setMinimumLatency(1000)
+                .setOverrideDeadline(2000)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPersisted(true)
+                .build();
+
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(myJob);
     }
 }
